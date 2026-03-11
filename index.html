@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paper Folding Geometry - Step by Step</title>
+    <style>
+        :root {
+            --bg: #f5f5f5;
+            --panel-bg: #ffffff;
+            --text-main: #222222;
+            --text-muted: #555555;
+            --border: #cccccc;
+            --highlight: #000000;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            width: 100%;
+            padding: 1.2rem 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h1 { margin: 0; font-size: 1.6rem; }
+        
+        main {
+            display: flex;
+            flex-direction: row;
+            width: 95%;
+            max-width: 1100px;
+            margin: 2rem auto;
+            background: var(--panel-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        /* SVG Visualization Area */
+        #viz-container {
+            flex: 1.2;
+            padding: 2rem;
+            border-right: 1px solid var(--border);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: radial-gradient(#e0e0e0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        svg {
+            width: 100%;
+            max-width: 500px;
+            overflow: visible;
+        }
+
+        /* Step-by-Step Panel Area */
+        #panel {
+            flex: 1;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .step-card {
+            display: none;
+            flex-grow: 1;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .step-card.active { display: block; }
+        .step-card h2 { color: var(--highlight); margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .step-card p { font-size: 1.15rem; line-height: 1.6; color: var(--text-main); }
+        .step-card .math-box {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #666;
+            font-size: 1.2rem;
+            margin: 15px 0;
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        button {
+            background-color: white;
+            color: var(--highlight);
+            border: 2px solid var(--highlight);
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: bold;
+        }
+
+        button:hover:not(:disabled) { background-color: #f0f0f0; }
+        button:active:not(:disabled) { transform: scale(0.97); }
+        button:disabled { border-color: #ccc; color: #aaa; cursor: not-allowed; }
+
+        /* SVG Animation Classes & Styles */
+        .angle-text { font-family: sans-serif; font-weight: bold; font-size: 16px; fill: #111; }
+        .point-label { font-family: sans-serif; font-size: 18px; fill: #000; font-weight: bold; }
+        .arc { fill: none; stroke: #333; stroke-width: 2.5; }
+        
+        #flap-group {
+            transform-origin: 115px 0px;
+            transition: transform 1.5s ease-in-out;
+            transform-style: preserve-3d;
+        }
+        
+        .fade { transition: opacity 0.4s ease-in-out; opacity: 0; }
+        .show { opacity: 1; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @media (max-width: 850px) {
+            main { flex-direction: column; }
+            #viz-container { border-right: none; border-bottom: 1px solid var(--border); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Nancy's Paper Folding Problem</h1>
+    </header>
+
+    <main>
+        <div id="viz-container">
+            <svg viewBox="-50 -50 500 450" id="paper-svg">
+                <polygon points="0,0 115,0 250,200 0,200" fill="#ffffff" stroke="#000" stroke-width="2.5"/>
+                
+                <polygon points="115,0 400,0 400,200 250,200" fill="transparent" stroke="#888" stroke-width="2" stroke-dasharray="6,6" id="ghost-right" class="fade"/>
+
+                <g id="flap-group">
+                    <polygon points="115,0 400,0 400,200 250,200" fill="#ffffff" stroke="#000" stroke-width="2.5" id="flap-polygon"/>
+                </g>
+
+                <line x1="115" y1="0" x2="250" y2="200" stroke="#000" stroke-width="3" stroke-dasharray="10,6"/>
+                <text x="110" y="-15" class="point-label">A</text>
+                <text x="245" y="225" class="point-label">B</text>
+
+                <g id="parallel-arrows" class="fade">
+                    <path d="M 280 -6 L 290 0 L 280 6" fill="none" stroke="#333" stroke-width="2"/>
+                    <path d="M 280 194 L 290 200 L 280 206" fill="none" stroke="#333" stroke-width="2"/>
+                </g>
+
+                <g id="angle-x-group" class="fade show">
+                    <path d="M 285 200 A 35 35 0 0 0 230 170.2" class="arc"/>
+                    <text x="260" y="180" class="angle-text">x = 124°</text>
+                </g>
+
+                <g id="angle-bottom-56" class="fade">
+                    <path d="M 250 200 L 230 200 A 20 20 0 0 1 236.1 179.3" class="arc"/>
+                    <text x="200" y="195" class="angle-text">56°</text>
+                </g>
+
+                <g id="angle-top-right-56" class="fade">
+                    <path d="M 145 0 A 30 30 0 0 1 131.8 24.9" class="arc"/>
+                    <text x="150" y="25" class="angle-text">56°</text>
+                </g>
+
+                <g id="angle-y-group" class="fade">
+                    <path d="M 75 0 A 40 40 0 0 0 100 37" class="arc"/>
+                    <text x="65" y="30" class="angle-text" id="y-label">y</text>
+                </g>
+
+                <g id="angle-folded-56" class="fade">
+                    <path d="M 131.8 24.9 A 30 30 0 0 1 103.7 27.8" class="arc"/>
+                    <text x="105" y="55" class="angle-text">56°</text>
+                </g>
+
+                <g id="angle-straight" class="fade">
+                    <path d="M 175 0 A 60 60 0 0 1 55 0" class="arc" stroke-dasharray="4,4" stroke-width="2" stroke="#666"/>
+                    <text x="95" y="80" class="angle-text" fill="#555">180°</text>
+                </g>
+            </svg>
+        </div>
+
+        <div id="panel">
+            <div class="step-card active" id="step-0">
+                <h2>The Problem</h2>
+                <p>Nancy folded a rectangular piece of paper along the dotted line AB.</p>
+                <p>Before folding, the obtuse angle at the bottom is given as <b>∠x = 124°</b>.</p>
+                <p>Our goal is to find the angle <b>y</b> step by step.</p>
+            </div>
+
+            <div class="step-card" id="step-1">
+                <h2>Step 1: Angles on a straight line</h2>
+                <p>Look at the bottom edge of the paper at point B. A flat edge is a straight line, which equals 180°.</p>
+                <p>We can find the acute angle next to x by subtracting from 180°.</p>
+                <div class="math-box">
+                    180° - 124° = 56°
+                </div>
+            </div>
+
+            <div class="step-card" id="step-2">
+                <h2>Step 2: Alternate Interior Angles</h2>
+                <p>Because the paper is a rectangle, the top and bottom edges are parallel.</p>
+                <p>The fold line AB acts as a diagonal line connecting them. This creates a "Z" shape.</p>
+                <p>Due to alternate interior angles, the angle at the top right is equal to the angle at the bottom left. They are both <b>56°</b>.</p>
+            </div>
+
+            <div class="step-card" id="step-3">
+                <h2>Step 3: Folding the paper</h2>
+                <p>Now, watch the paper fold along line AB.</p>
+                <p>When folded, the entire right side of the paper mirrors over the dotted line. The original lines are shown as dashed lines so you can see where the paper used to be.</p>
+                <p>Notice how our <b>56°</b> angle moves from the right side of point A to the left side, overlapping the paper.</p>
+            </div>
+
+            <div class="step-card" id="step-4">
+                <h2>Step 4: The top straight line</h2>
+                <p>Now let's look closely at the top edge of the paper at point A.</p>
+                <p>This straight line is 180°. It is now made up of three parts:</p>
+                <ul>
+                    <li>The angle <b>y</b></li>
+                    <li>The folded flap angle (<b>56°</b>)</li>
+                    <li>The empty space where the paper used to be (<b>56°</b>)</li>
+                </ul>
+            </div>
+
+            <div class="step-card" id="step-5">
+                <h2>Step 5: Calculate y</h2>
+                <p>Since the three angles must add up to a straight line (180°), we can find <b>y</b> by subtracting the two 56° angles.</p>
+                <div class="math-box">
+                    y + 56° + 56° = 180°<br><br>
+                    y = 180° - 112°<br><br>
+                    y = 68°
+                </div>
+                <p>You have successfully solved for the missing angle!</p>
+            </div>
+
+            <div class="controls">
+                <button id="prev-btn" onclick="changeStep(-1)" disabled>Back</button>
+                <button id="next-btn" onclick="changeStep(1)">Next Step</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const totalSteps = 6;
+        let currentStep = 0;
+
+        function updateVisuals() {
+            // Get all SVG elements
+            const flap = document.getElementById('flap-group');
+            const flapPolygon = document.getElementById('flap-polygon');
+            const ghost = document.getElementById('ghost-right');
+            
+            // Get Angle Groups
+            const angleBottom56 = document.getElementById('angle-bottom-56');
+            const angleTopRight56 = document.getElementById('angle-top-right-56');
+            const angleFolded56 = document.getElementById('angle-folded-56');
+            const angleY = document.getElementById('angle-y-group');
+            const angleStraight = document.getElementById('angle-straight');
+            const parallelArrows = document.getElementById('parallel-arrows');
+            const yLabel = document.getElementById('y-label');
+
+            // Reset step-based visibility
+            angleBottom56.classList.remove('show');
+            angleTopRight56.classList.remove('show');
+            angleFolded56.classList.remove('show');
+            angleY.classList.remove('show');
+            angleStraight.classList.remove('show');
+            parallelArrows.classList.remove('show');
+
+            // Reset fold logic
+            flap.style.transform = 'rotate3d(0.5594, 0.8289, 0, 0deg)';
+            flapPolygon.setAttribute('fill', '#ffffff'); // pure white before fold
+            ghost.classList.remove('show');
+            yLabel.textContent = 'y';
+
+            // Sequential Application of Logic
+            if (currentStep >= 1) {
+                // Show bottom 56
+                angleBottom56.classList.add('show');
+            }
+
+            if (currentStep >= 2) {
+                // Show parallel arrows and top right 56
+                parallelArrows.classList.add('show');
+                angleTopRight56.classList.add('show');
+            }
+            
+            if (currentStep >= 3) {
+                // Perform the 3D Fold
+                flap.style.transform = 'rotate3d(0.5594, 0.8289, 0, 180deg)';
+                flapPolygon.setAttribute('fill', '#f4f4f4'); // slightly greyed out flap to show it's folded over
+                ghost.classList.add('show'); // show missing lines
+                
+                // Hide the top right angle as it physically moves
+                angleTopRight56.classList.remove('show');
+                
+                // Delay showing the new folded angle position so the student watches the flap move first
+                setTimeout(() => {
+                    if(currentStep >= 3) {
+                        angleTopRight56.classList.add('show'); // Show it in the "ghost" area
+                        angleTopRight56.style.opacity = "0.4"; // Fade it slightly to indicate it's empty space
+                        angleFolded56.classList.add('show'); // Show it on the flap
+                    }
+                }, 1200);
+            } else {
+                 angleTopRight56.style.opacity = "1"; // Reset opacity if moving backwards
+            }
+
+            if (currentStep >= 4) {
+                // Show y arc and straight line arc
+                angleY.classList.add('show');
+                angleStraight.classList.add('show');
+            }
+
+            if (currentStep >= 5) {
+                // Solve for y
+                yLabel.textContent = '68°';
+                yLabel.style.fontSize = '20px';
+            } else {
+                yLabel.style.fontSize = '16px';
+            }
+        }
+
+        function changeStep(direction) {
+            // Hide current card
+            document.getElementById(`step-${currentStep}`).classList.remove('active');
+            
+            // Update step tracker
+            currentStep += direction;
+            
+            // Boundary checks
+            if (currentStep < 0) currentStep = 0;
+            if (currentStep >= totalSteps) currentStep = totalSteps - 1;
+
+            // Show new card
+            document.getElementById(`step-${currentStep}`).classList.add('active');
+
+            // Update buttons
+            document.getElementById('prev-btn').disabled = (currentStep === 0);
+            
+            let nextBtn = document.getElementById('next-btn');
+            if (currentStep === totalSteps - 1) {
+                nextBtn.disabled = true;
+                nextBtn.innerText = "Finish";
+            } else {
+                nextBtn.disabled = false;
+                nextBtn.innerText = "Next Step";
+            }
+
+            // Trigger visual updates
+            updateVisuals();
+        }
+
+        // Initialize visuals on load
+        window.onload = updateVisuals;
+    </script>
+</body>
+</html>
