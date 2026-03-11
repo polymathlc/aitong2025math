@@ -399,6 +399,289 @@
             .sidebar { width: 56px; min-width: 56px; }
             .q-num { width: 24px; height: 24px; font-size: 12px; border-radius: 6px; }
         }
+
+        /* ===== PRINT BUTTON IN SIDEBAR ===== */
+        .sidebar-actions {
+            margin-top: auto;
+            padding: 16px 12px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .print-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 10px;
+            background: var(--primary);
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            font-family: 'Century Gothic', 'Tw Cen MT', Futura, sans-serif;
+            transition: all 0.25s ease;
+        }
+
+        .print-btn:hover { background: var(--primary-hover); }
+
+        .print-btn svg { flex-shrink: 0; }
+
+        @media (max-width: 1000px) {
+            .print-btn span { display: none; }
+            .print-btn { justify-content: center; padding: 12px; }
+        }
+
+        /* ===== PRINT MODAL ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.open { display: flex; }
+
+        .modal {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+            width: 400px;
+            max-width: 90vw;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            padding: 24px 28px 0;
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--text-heading);
+        }
+
+        .modal-sub {
+            padding: 8px 28px 20px;
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .modal-options {
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .modal-option {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 18px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-main);
+            font-family: 'Century Gothic', 'Tw Cen MT', Futura, sans-serif;
+            transition: all 0.2s ease;
+        }
+
+        .modal-option:hover {
+            border-color: var(--primary);
+            background: #eef2ff;
+            color: var(--primary);
+        }
+
+        .modal-option .opt-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 18px;
+        }
+
+        .modal-option:hover .opt-icon { background: #e0e7ff; }
+
+        .modal-option .opt-text { line-height: 1.3; }
+        .modal-option .opt-desc {
+            font-size: 12px;
+            font-weight: normal;
+            color: #94a3b8;
+            margin-top: 2px;
+        }
+
+        .modal-footer {
+            padding: 20px 28px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .modal-cancel {
+            padding: 10px 20px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            background: white;
+            color: #64748b;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Century Gothic', 'Tw Cen MT', Futura, sans-serif;
+            transition: all 0.2s;
+        }
+
+        .modal-cancel:hover { background: #f8fafc; color: var(--text-heading); }
+
+        /* ===== PRINT LAYOUT ===== */
+        #print-area {
+            display: none;
+        }
+
+        @media print {
+            body > *:not(#print-area) { display: none !important; }
+
+            body {
+                background: white;
+                margin: 0;
+                padding: 0;
+                display: block;
+            }
+
+            #print-area {
+                display: block !important;
+            }
+
+            .print-page {
+                width: 210mm;
+                height: 297mm;
+                padding: 12mm 15mm;
+                page-break-after: always;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .print-page:last-child { page-break-after: avoid; }
+
+            .print-half {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                padding: 5mm 0;
+                border-bottom: 1px dashed #cbd5e1;
+                overflow: hidden;
+            }
+
+            .print-half:last-child { border-bottom: none; }
+
+            .print-q-header {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 4mm;
+            }
+
+            .print-q-num {
+                background: #0f172a;
+                color: white;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 14px;
+                font-weight: bold;
+                flex-shrink: 0;
+            }
+
+            .print-q-label {
+                font-size: 13px;
+                font-weight: bold;
+                color: #0f172a;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+
+            .print-q-text {
+                font-size: 13px;
+                line-height: 1.6;
+                color: #334155;
+                margin-bottom: 4mm;
+                padding: 3mm 4mm;
+                background: #f8fafc;
+                border-left: 3px solid #0f172a;
+                border-radius: 0 6px 6px 0;
+            }
+
+            .print-diagram {
+                flex: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 0;
+            }
+
+            .print-diagram svg {
+                max-width: 100%;
+                max-height: 100%;
+                width: auto;
+                height: auto;
+            }
+
+            .print-answer-box {
+                padding: 4mm;
+                flex: 1;
+            }
+
+            .print-answer-box h3 {
+                font-size: 14px;
+                color: #0f172a;
+                margin: 0 0 3mm;
+                padding-bottom: 2mm;
+                border-bottom: 1px solid #e2e8f0;
+            }
+
+            .print-answer-item {
+                font-size: 12px;
+                line-height: 1.7;
+                color: #334155;
+                margin-bottom: 3mm;
+            }
+
+            .print-answer-item strong { color: #0f172a; }
+
+            .print-answer-final {
+                background: #f1f5f9;
+                padding: 3mm 4mm;
+                border-radius: 4px;
+                border-left: 3px solid var(--primary);
+                font-size: 13px;
+                font-weight: bold;
+                color: #0f172a;
+                margin-top: 2mm;
+                font-family: 'Courier New', monospace;
+            }
+
+            .print-page-title {
+                text-align: center;
+                font-size: 18px;
+                font-weight: bold;
+                color: #0f172a;
+                margin-bottom: 5mm;
+                padding-bottom: 3mm;
+                border-bottom: 2px solid #0f172a;
+            }
+        }
     </style>
 </head>
 <body>
@@ -419,7 +702,50 @@
                 <span>Five Squares in a Rectangle</span>
             </button>
         </div>
+        <div class="sidebar-actions">
+            <button class="print-btn" onclick="openPrintModal()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                <span>Print Worksheet</span>
+            </button>
+        </div>
     </div>
+
+    <!-- ===== PRINT MODAL ===== -->
+    <div class="modal-overlay" id="print-modal">
+        <div class="modal">
+            <div class="modal-header">Print Worksheet</div>
+            <div class="modal-sub">Choose what to include in your printout.</div>
+            <div class="modal-options">
+                <button class="modal-option" onclick="doPrint('questions')">
+                    <div class="opt-icon">&#128221;</div>
+                    <div>
+                        <div class="opt-text">Questions Only</div>
+                        <div class="opt-desc">Diagrams and question text, no answers</div>
+                    </div>
+                </button>
+                <button class="modal-option" onclick="doPrint('answers')">
+                    <div class="opt-icon">&#128273;</div>
+                    <div>
+                        <div class="opt-text">Answer Key Only</div>
+                        <div class="opt-desc">Solutions and working for all questions</div>
+                    </div>
+                </button>
+                <button class="modal-option" onclick="doPrint('both')">
+                    <div class="opt-icon">&#128214;</div>
+                    <div>
+                        <div class="opt-text">Both</div>
+                        <div class="opt-desc">Questions first, answer key on the next page</div>
+                    </div>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-cancel" onclick="closePrintModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PRINT AREA (hidden, populated by JS) ===== -->
+    <div id="print-area"></div>
 
     <!-- ===== MAIN CONTENT ===== -->
     <div class="main-area">
@@ -909,6 +1235,205 @@
         function q2ChangeStep(dir) {
             q2CurrentStep = Math.max(0, Math.min(q2Steps.length - 1, q2CurrentStep + dir));
             q2UpdateUI();
+        }
+
+        // ==========================================
+        // PRINT FUNCTIONALITY
+        // ==========================================
+        function openPrintModal() {
+            document.getElementById('print-modal').classList.add('open');
+        }
+
+        function closePrintModal() {
+            document.getElementById('print-modal').classList.remove('open');
+        }
+
+        // Close modal on overlay click
+        document.getElementById('print-modal').addEventListener('click', function(e) {
+            if (e.target === this) closePrintModal();
+        });
+
+        function getQ1SvgForPrint() {
+            // Clone Q1 SVG in its initial state (just the problem diagram)
+            const svg = document.getElementById('paper-svg');
+            const clone = svg.cloneNode(true);
+            clone.removeAttribute('id');
+            // Reset to initial state: hide all step visuals
+            clone.querySelectorAll('.fade').forEach(el => {
+                el.style.opacity = '0';
+            });
+            // Show only the x angle
+            const xGroup = clone.querySelector('#angle-x-group');
+            if (xGroup) xGroup.style.opacity = '1';
+            // Reset flap
+            const flap = clone.querySelector('#flap-group');
+            if (flap) flap.style.transform = 'rotate3d(0.5594, 0.8289, 0, 0deg)';
+            const flapPoly = clone.querySelector('#flap-polygon');
+            if (flapPoly) flapPoly.setAttribute('fill', '#ffffff');
+            // Remove IDs to avoid conflicts
+            clone.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+            return clone.outerHTML;
+        }
+
+        function getQ2SvgForPrint() {
+            // Ensure Q2 geometry is initialized
+            if (!q2Initialized) q2InitGeometryOnly();
+            const svg = document.getElementById('math-svg');
+            const clone = svg.cloneNode(true);
+            clone.removeAttribute('id');
+            // Reset all highlights and show base state
+            clone.querySelectorAll('.highlight-shape, .highlight-shape-alt').forEach(el => {
+                el.classList.remove('highlight-shape', 'highlight-shape-alt');
+            });
+            clone.querySelectorAll('.dim-text').forEach(el => {
+                el.style.opacity = '0';
+            });
+            clone.querySelectorAll('.highlight-text').forEach(el => {
+                el.classList.remove('highlight-text');
+            });
+            // Show X and Y labels, hide Z
+            clone.querySelectorAll('[id]').forEach(el => {
+                if (el.id === 'lbl-z') el.style.opacity = '0';
+            });
+            clone.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+            return clone.outerHTML;
+        }
+
+        // Initialize Q2 geometry without full UI (for print before user visits Q2)
+        function q2InitGeometryOnly() {
+            q2Rects.forEach(r => {
+                const el = document.getElementById(r.id);
+                if (!el) return;
+                const pts = [
+                    { x: r.x * Q2_S + Q2_Ox, y: r.y * Q2_S + Q2_Oy },
+                    { x: (r.x + r.w) * Q2_S + Q2_Ox, y: r.y * Q2_S + Q2_Oy },
+                    { x: (r.x + r.w) * Q2_S + Q2_Ox, y: (r.y + r.h) * Q2_S + Q2_Oy },
+                    { x: r.x * Q2_S + Q2_Ox, y: (r.y + r.h) * Q2_S + Q2_Oy }
+                ];
+                el.setAttribute('points', pts.map(p => `${p.x},${p.y}`).join(' '));
+            });
+
+            q2Labels.forEach(l => {
+                const el = document.getElementById(l.id);
+                if (!el) return;
+                el.setAttribute('x', l.x * Q2_S + Q2_Ox);
+                el.setAttribute('y', l.y * Q2_S + Q2_Oy);
+            });
+
+            const leftHText = document.getElementById('dim-left-h');
+            if (leftHText) {
+                const lhX = -(5 * Q2_S + Q2_Oy);
+                const lhY = -1 * Q2_S + Q2_Ox;
+                leftHText.setAttribute('transform', `rotate(-90) translate(${lhX}, ${lhY})`);
+            }
+        }
+
+        function buildQuestionsPage() {
+            return `
+                <div class="print-page">
+                    <div class="print-page-title">Geometry Worksheet</div>
+                    <div class="print-half">
+                        <div class="print-q-header">
+                            <div class="print-q-num">1</div>
+                            <div class="print-q-label">Nancy's Paper Folding</div>
+                        </div>
+                        <div class="print-q-text">
+                            Nancy folded a rectangular piece of paper along the dotted line AB. Given that ∠x = 124°, find the value of ∠y.
+                        </div>
+                        <div class="print-diagram">${getQ1SvgForPrint()}</div>
+                    </div>
+                    <div class="print-half">
+                        <div class="print-q-header">
+                            <div class="print-q-num">2</div>
+                            <div class="print-q-label">Five Squares in a Rectangle</div>
+                        </div>
+                        <div class="print-q-text">
+                            In the figure, five squares are drawn within a rectangular piece of paper.
+                            The left-over part of the paper is shaded. The side of square X measures 4 cm.<br>
+                            (a) Find the length of the side of square Y.<br>
+                            (b) Find the length of the piece of paper.<br>
+                            (c) Paul cuts the 5 squares into 2-cm squares to make cubes. What is the greatest number of cubes he can make?
+                        </div>
+                        <div class="print-diagram">${getQ2SvgForPrint()}</div>
+                    </div>
+                </div>`;
+        }
+
+        function buildAnswersPage() {
+            return `
+                <div class="print-page">
+                    <div class="print-page-title">Answer Key</div>
+                    <div class="print-half">
+                        <div class="print-q-header">
+                            <div class="print-q-num">1</div>
+                            <div class="print-q-label">Nancy's Paper Folding</div>
+                        </div>
+                        <div class="print-answer-box">
+                            <h3>Solution</h3>
+                            <div class="print-answer-item">
+                                <strong>Step 1:</strong> Angles on a straight line at B:<br>
+                                180° − 124° = 56°
+                            </div>
+                            <div class="print-answer-item">
+                                <strong>Step 2:</strong> By alternate interior angles (parallel edges), the angle at A (top right) = 56°
+                            </div>
+                            <div class="print-answer-item">
+                                <strong>Step 3:</strong> When folded, the 56° angle mirrors to the left of A. The top edge at A is a straight line (180°), composed of three angles: y, 56° (folded), and 56° (original).
+                            </div>
+                            <div class="print-answer-final">
+                                y + 56° + 56° = 180°<br>
+                                y = 180° − 112° = <strong>68°</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="print-half">
+                        <div class="print-q-header">
+                            <div class="print-q-num">2</div>
+                            <div class="print-q-label">Five Squares in a Rectangle</div>
+                        </div>
+                        <div class="print-answer-box">
+                            <h3>Solution</h3>
+                            <div class="print-answer-item">
+                                <strong>(a)</strong> Square X has side 4 cm. Squares Y and Z are stacked beside X with the same total height.<br>
+                                Side of Y = 4 ÷ 2 = <strong>2 cm</strong>
+                            </div>
+                            <div class="print-answer-item">
+                                <strong>(b)</strong> Top square width = 4 + 2 = 6 cm. Left square height = 6 + 4 = 10 cm (also its width, since it's a square). Shaded strip = 1.5 cm.<br>
+                            </div>
+                            <div class="print-answer-final" style="margin-bottom: 3mm;">
+                                Length = 10 + 6 + 1.5 = <strong>17.5 cm</strong>
+                            </div>
+                            <div class="print-answer-item">
+                                <strong>(c)</strong> Number of 2-cm squares: 10×10→25, 6×6→9, 4×4→4, 2×2→1, 2×2→1. Total = 40.<br>
+                                Each cube needs 6 faces: 40 ÷ 6 = 6 remainder 4.
+                            </div>
+                            <div class="print-answer-final">
+                                Greatest number of cubes = <strong>6</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+        }
+
+        function doPrint(mode) {
+            closePrintModal();
+
+            const printArea = document.getElementById('print-area');
+            let html = '';
+
+            if (mode === 'questions' || mode === 'both') {
+                html += buildQuestionsPage();
+            }
+            if (mode === 'answers' || mode === 'both') {
+                html += buildAnswersPage();
+            }
+
+            printArea.innerHTML = html;
+
+            // Small delay to let SVGs render before print dialog
+            setTimeout(() => {
+                window.print();
+            }, 200);
         }
 
         // ==========================================
