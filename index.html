@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paper Folding Geometry - Step by Step</title>
+    <title>Geometry Step-by-Step Solver</title>
     <style>
+        /* ===== GLOBAL STYLES ===== */
+        * { box-sizing: border-box; }
+
         :root {
             --bg: #f5f5f5;
             --panel-bg: #ffffff;
@@ -12,6 +15,13 @@
             --text-muted: #555555;
             --border: #cccccc;
             --highlight: #000000;
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --secondary: #f8fafc;
+            --accent: #10b981;
+            --text-heading: #0f172a;
+            --bg-color: #e2e8f0;
+            --highlight-color: #e11d48;
         }
 
         body {
@@ -26,7 +36,79 @@
             min-height: 100vh;
         }
 
-        header {
+        /* ===== TOP BAR WITH LOGO ===== */
+        .top-bar {
+            background-color: #ffffff;
+            width: 100%;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .top-bar img {
+            height: 60px;
+            object-fit: contain;
+        }
+
+        /* ===== QUESTION SELECTOR ===== */
+        .question-selector {
+            width: 95%;
+            max-width: 1280px;
+            margin: 20px auto 0;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .q-btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 14px 20px;
+            border: 2px solid #cbd5e1;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #334155;
+            text-align: left;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .q-btn:hover { border-color: var(--primary); color: var(--primary); }
+        .q-btn.active {
+            border-color: var(--primary);
+            background: #eef2ff;
+            color: var(--primary);
+            box-shadow: 0 2px 8px rgba(79, 70, 229, 0.15);
+        }
+
+        .q-btn .q-num {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            font-size: 0.8rem;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        /* ===== QUESTION CONTAINERS ===== */
+        .question-container { display: none; }
+        .question-container.active { display: block; }
+
+        /* ==========================================
+           QUESTION 1: Nancy's Paper Folding
+           ========================================== */
+        #q1-container header {
             background-color: #333;
             color: white;
             width: 100%;
@@ -35,9 +117,9 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        h1 { margin: 0; font-size: 1.6rem; }
-        
-        main {
+        #q1-container h1 { margin: 0; font-size: 1.6rem; }
+
+        #q1-container main {
             display: flex;
             flex-direction: row;
             width: 95%;
@@ -50,8 +132,7 @@
             overflow: hidden;
         }
 
-        /* SVG Visualization Area */
-        #viz-container {
+        #q1-container #viz-container {
             flex: 1.2;
             padding: 2rem;
             border-right: 1px solid var(--border);
@@ -62,30 +143,29 @@
             background-size: 20px 20px;
         }
 
-        svg {
+        #q1-container #viz-container svg {
             width: 100%;
             max-width: 500px;
             overflow: visible;
         }
 
-        /* Step-by-Step Panel Area */
-        #panel {
+        #q1-container #panel {
             flex: 1;
             padding: 2.5rem;
             display: flex;
             flex-direction: column;
         }
 
-        .step-card {
+        #q1-container .step-card {
             display: none;
             flex-grow: 1;
             animation: fadeIn 0.3s ease-in-out;
         }
 
-        .step-card.active { display: block; }
-        .step-card h2 { color: var(--highlight); margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        .step-card p { font-size: 1.15rem; line-height: 1.6; color: var(--text-main); }
-        .step-card .math-box {
+        #q1-container .step-card.active { display: block; }
+        #q1-container .step-card h2 { color: var(--highlight); margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        #q1-container .step-card p { font-size: 1.15rem; line-height: 1.6; color: var(--text-main); }
+        #q1-container .math-box {
             background: #f9f9f9;
             padding: 15px;
             border-radius: 6px;
@@ -96,8 +176,7 @@
             font-weight: bold;
         }
 
-        /* Controls */
-        .controls {
+        #q1-container .controls {
             display: flex;
             justify-content: space-between;
             margin-top: 20px;
@@ -105,7 +184,7 @@
             border-top: 1px solid var(--border);
         }
 
-        button {
+        #q1-container button {
             background-color: white;
             color: var(--highlight);
             border: 2px solid var(--highlight);
@@ -115,23 +194,23 @@
             cursor: pointer;
             transition: all 0.2s;
             font-weight: bold;
+            font-family: inherit;
         }
 
-        button:hover:not(:disabled) { background-color: #f0f0f0; }
-        button:active:not(:disabled) { transform: scale(0.97); }
-        button:disabled { border-color: #ccc; color: #aaa; cursor: not-allowed; }
+        #q1-container button:hover:not(:disabled) { background-color: #f0f0f0; }
+        #q1-container button:active:not(:disabled) { transform: scale(0.97); }
+        #q1-container button:disabled { border-color: #ccc; color: #aaa; cursor: not-allowed; }
 
-        /* SVG Animation Classes & Styles */
         .angle-text { font-family: sans-serif; font-weight: bold; font-size: 16px; fill: #111; }
         .point-label { font-family: sans-serif; font-size: 18px; fill: #000; font-weight: bold; }
         .arc { fill: none; stroke: #333; stroke-width: 2.5; }
-        
+
         #flap-group {
             transform-origin: 115px 0px;
             transition: transform 1.5s ease-in-out;
             transform-style: preserve-3d;
         }
-        
+
         .fade { transition: opacity 0.4s ease-in-out; opacity: 0; }
         .show { opacity: 1; }
 
@@ -140,141 +219,451 @@
             to { opacity: 1; transform: translateX(0); }
         }
 
-        @media (max-width: 850px) {
-            main { flex-direction: column; }
-            #viz-container { border-right: none; border-bottom: 1px solid var(--border); }
+        /* ==========================================
+           QUESTION 2: Five Squares Problem
+           ========================================== */
+        #q2-container .app-container {
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            max-width: 1280px;
+            width: 95%;
+            margin: 2rem auto;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+
+        #q2-container .question-bar {
+            background-color: #f1f5f9;
+            padding: 20px 50px;
+            font-size: 18px;
+            color: #0f172a;
+            text-align: center;
+            border-bottom: 1px solid #cbd5e1;
+            font-weight: bold;
+            line-height: 1.6;
+            font-family: 'Century Gothic', 'Tw Cen MT', Futura, sans-serif;
+        }
+
+        #q2-container .content {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 40px 50px 50px 50px;
+            gap: 40px;
+        }
+
+        #q2-container .diagram-section {
+            flex: 2.4;
+            min-width: 520px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #ffffff;
+            border: 1px solid #f1f5f9;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: inset 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        #q2-container .diagram-section svg {
+            width: 100%;
+            max-width: 750px;
+            height: auto;
+        }
+
+        #q2-container .polygon-shape {
+            fill: #ffffff;
+            stroke: #0f172a;
+            stroke-width: 2.5;
+            transition: fill 0.5s ease;
+        }
+
+        #q2-container .shaded-shape {
+            fill: url(#diagonalHatch);
+            stroke: #0f172a;
+            stroke-width: 2.5;
+            transition: opacity 0.5s ease;
+        }
+
+        #q2-container .highlight-shape {
+            fill: rgba(79, 70, 229, 0.15);
+            stroke: var(--primary);
+            stroke-width: 3.5;
+        }
+
+        #q2-container .highlight-shape-alt {
+            fill: rgba(225, 29, 72, 0.15);
+            stroke: var(--highlight-color);
+            stroke-width: 3.5;
+        }
+
+        #q2-container .text-label {
+            font-family: 'Century Gothic', 'Tw Cen MT', Futura, sans-serif;
+            fill: #334155;
+            transition: all 0.5s ease;
+            text-anchor: middle;
+            dominant-baseline: central;
+            font-size: 16px;
+        }
+
+        #q2-container .bold-text {
+            font-weight: bold;
+            fill: #0f172a;
+            font-size: 20px;
+        }
+
+        #q2-container .dim-text {
+            font-weight: bold;
+            fill: #475569;
+            opacity: 0;
+        }
+
+        #q2-container .highlight-text {
+            fill: var(--highlight-color) !important;
+            font-size: 18px !important;
+            font-weight: bold;
+        }
+
+        #q2-container .explanation-section {
+            flex: 1;
+            min-width: 380px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #q2-container .step-box {
+            background: var(--secondary);
+            border-left: 4px solid var(--primary);
+            padding: 28px;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 20px;
+            margin-left: 10px;
+            margin-right: 10px;
+            flex-grow: 1;
+            font-size: 16px;
+            line-height: 1.75;
+            color: var(--text-main);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+            font-family: 'Century Gothic', 'Tw Cen MT', Futura, sans-serif;
+        }
+
+        #q2-container .step-box h2 {
+            margin-top: 0;
+            color: var(--text-heading);
+            font-size: 21px;
+            font-weight: normal;
+            border-bottom: 1px solid #cbd5e1;
+            padding-bottom: 12px;
+            margin-bottom: 18px;
+        }
+
+        #q2-container .q2-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: transparent;
+            margin: 0 20px;
+            padding: 24px 10px 10px 10px;
+            border-top: 1px solid #e2e8f0;
+            margin-top: auto;
+            gap: 12px;
+        }
+
+        #q2-container .q2-controls button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-family: 'Century Gothic', 'Tw Cen MT', Futura, sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
+            min-width: 95px;
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+
+        #q2-container .q2-controls button:hover:not(:disabled) {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
+        }
+
+        #q2-container .q2-controls button:disabled {
+            background-color: #cbd5e1;
+            box-shadow: none;
+            cursor: not-allowed;
+            color: #64748b;
+        }
+
+        #q2-container .progress-dots {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex: 1;
+            padding: 0 10px;
+        }
+
+        #q2-container .dot {
+            width: 9px;
+            height: 9px;
+            background: #cbd5e1;
+            border-radius: 50%;
+            transition: all 0.4s ease;
+            flex-shrink: 0;
+        }
+
+        #q2-container .dot.active {
+            background: var(--primary);
+            transform: scale(1.4);
+        }
+
+        .math-text {
+            background: #e2e8f0;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: bold;
+            color: #0f172a;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            #q1-container main { flex-direction: column; }
+            #q1-container #viz-container { border-right: none; border-bottom: 1px solid var(--border); }
+            #q2-container .content { padding: 20px; gap: 20px; }
+            #q2-container .diagram-section, #q2-container .explanation-section { min-width: 100%; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Nancy's Paper Folding Problem</h1>
-    </header>
+    <!-- ===== LOGO BAR ===== -->
+    <div class="top-bar">
+        <img src="https://www.dropbox.com/scl/fi/h40yjlyg8ldefwfaa3dib/polymath-logo-sticker.png?rlkey=o1ra4taqy79gt9t8u096v82zj&raw=1" alt="Polymath Learning Centre Logo">
+    </div>
 
-    <main>
-        <div id="viz-container">
-            <svg viewBox="-50 -50 500 450" id="paper-svg">
-                <polygon points="0,0 115,0 250,200 0,200" fill="#ffffff" stroke="#000" stroke-width="2.5"/>
-                
-                <polygon points="115,0 400,0 400,200 250,200" fill="transparent" stroke="#888" stroke-width="2" stroke-dasharray="6,6" id="ghost-right" class="fade"/>
+    <!-- ===== QUESTION SELECTOR ===== -->
+    <div class="question-selector">
+        <button class="q-btn active" onclick="switchQuestion(1)">
+            <span class="q-num">1</span> Nancy's Paper Folding Problem
+        </button>
+        <button class="q-btn" onclick="switchQuestion(2)">
+            <span class="q-num">2</span> Five Squares in a Rectangle
+        </button>
+    </div>
 
-                <g id="flap-group">
-                    <polygon points="115,0 400,0 400,200 250,200" fill="#ffffff" stroke="#000" stroke-width="2.5" id="flap-polygon"/>
-                </g>
+    <!-- ==========================================
+         QUESTION 1: Nancy's Paper Folding
+         ========================================== -->
+    <div id="q1-container" class="question-container active">
+        <header>
+            <h1>Nancy's Paper Folding Problem</h1>
+        </header>
 
-                <line x1="115" y1="0" x2="250" y2="200" stroke="#000" stroke-width="3" stroke-dasharray="10,6"/>
-                <text x="110" y="-15" class="point-label">A</text>
-                <text x="245" y="225" class="point-label">B</text>
+        <main>
+            <div id="viz-container">
+                <svg viewBox="-50 -50 500 450" id="paper-svg">
+                    <polygon points="0,0 115,0 250,200 0,200" fill="#ffffff" stroke="#000" stroke-width="2.5"/>
 
-                <g id="parallel-arrows" class="fade">
-                    <path d="M 280 -6 L 290 0 L 280 6" fill="none" stroke="#333" stroke-width="2"/>
-                    <path d="M 280 194 L 290 200 L 280 206" fill="none" stroke="#333" stroke-width="2"/>
-                </g>
+                    <polygon points="115,0 400,0 400,200 250,200" fill="transparent" stroke="#888" stroke-width="2" stroke-dasharray="6,6" id="ghost-right" class="fade"/>
 
-                <g id="angle-x-group" class="fade show">
-                    <path d="M 285 200 A 35 35 0 0 0 230 170.2" class="arc"/>
-                    <text x="260" y="180" class="angle-text">x = 124°</text>
-                </g>
+                    <g id="flap-group">
+                        <polygon points="115,0 400,0 400,200 250,200" fill="#ffffff" stroke="#000" stroke-width="2.5" id="flap-polygon"/>
+                    </g>
 
-                <g id="angle-bottom-56" class="fade">
-                    <path d="M 250 200 L 230 200 A 20 20 0 0 1 236.1 179.3" class="arc"/>
-                    <text x="200" y="195" class="angle-text">56°</text>
-                </g>
+                    <line x1="115" y1="0" x2="250" y2="200" stroke="#000" stroke-width="3" stroke-dasharray="10,6"/>
+                    <text x="110" y="-15" class="point-label">A</text>
+                    <text x="245" y="225" class="point-label">B</text>
 
-                <g id="angle-top-right-56" class="fade">
-                    <path d="M 145 0 A 30 30 0 0 1 131.8 24.9" class="arc"/>
-                    <text x="150" y="25" class="angle-text">56°</text>
-                </g>
+                    <g id="parallel-arrows" class="fade">
+                        <path d="M 280 -6 L 290 0 L 280 6" fill="none" stroke="#333" stroke-width="2"/>
+                        <path d="M 280 194 L 290 200 L 280 206" fill="none" stroke="#333" stroke-width="2"/>
+                    </g>
 
-                <g id="angle-y-group" class="fade">
-                    <path d="M 75 0 A 40 40 0 0 0 100 37" class="arc"/>
-                    <text x="65" y="30" class="angle-text" id="y-label">y</text>
-                </g>
+                    <g id="angle-x-group" class="fade show">
+                        <path d="M 285 200 A 35 35 0 0 0 230 170.2" class="arc"/>
+                        <text x="260" y="180" class="angle-text">x = 124°</text>
+                    </g>
 
-                <g id="angle-folded-56" class="fade">
-                    <path d="M 131.8 24.9 A 30 30 0 0 1 103.7 27.8" class="arc"/>
-                    <text x="105" y="55" class="angle-text">56°</text>
-                </g>
+                    <g id="angle-bottom-56" class="fade">
+                        <path d="M 250 200 L 230 200 A 20 20 0 0 1 236.1 179.3" class="arc"/>
+                        <text x="200" y="195" class="angle-text">56°</text>
+                    </g>
 
-                <g id="angle-straight" class="fade">
-                    <path d="M 175 0 A 60 60 0 0 1 55 0" class="arc" stroke-dasharray="4,4" stroke-width="2" stroke="#666"/>
-                    <text x="95" y="80" class="angle-text" fill="#555">180°</text>
-                </g>
-            </svg>
-        </div>
+                    <g id="angle-top-right-56" class="fade">
+                        <path d="M 145 0 A 30 30 0 0 1 131.8 24.9" class="arc"/>
+                        <text x="150" y="25" class="angle-text">56°</text>
+                    </g>
 
-        <div id="panel">
-            <div class="step-card active" id="step-0">
-                <h2>The Problem</h2>
-                <p>Nancy folded a rectangular piece of paper along the dotted line AB.</p>
-                <p>Before folding, the obtuse angle at the bottom is given as <b>∠x = 124°</b>.</p>
-                <p>Our goal is to find the angle <b>y</b> step by step.</p>
+                    <g id="angle-y-group" class="fade">
+                        <path d="M 75 0 A 40 40 0 0 0 100 37" class="arc"/>
+                        <text x="65" y="30" class="angle-text" id="y-label">y</text>
+                    </g>
+
+                    <g id="angle-folded-56" class="fade">
+                        <path d="M 131.8 24.9 A 30 30 0 0 1 103.7 27.8" class="arc"/>
+                        <text x="105" y="55" class="angle-text">56°</text>
+                    </g>
+
+                    <g id="angle-straight" class="fade">
+                        <path d="M 175 0 A 60 60 0 0 1 55 0" class="arc" stroke-dasharray="4,4" stroke-width="2" stroke="#666"/>
+                        <text x="95" y="80" class="angle-text" fill="#555">180°</text>
+                    </g>
+                </svg>
             </div>
 
-            <div class="step-card" id="step-1">
-                <h2>Step 1: Angles on a straight line</h2>
-                <p>Look at the bottom edge of the paper at point B. A flat edge is a straight line, which equals 180°.</p>
-                <p>We can find the acute angle next to x by subtracting from 180°.</p>
-                <div class="math-box">
-                    180° - 124° = 56°
+            <div id="panel">
+                <div class="step-card active" id="step-0">
+                    <h2>The Problem</h2>
+                    <p>Nancy folded a rectangular piece of paper along the dotted line AB.</p>
+                    <p>Before folding, the obtuse angle at the bottom is given as <b>∠x = 124°</b>.</p>
+                    <p>Our goal is to find the angle <b>y</b> step by step.</p>
+                </div>
+
+                <div class="step-card" id="step-1">
+                    <h2>Step 1: Angles on a straight line</h2>
+                    <p>Look at the bottom edge of the paper at point B. A flat edge is a straight line, which equals 180°.</p>
+                    <p>We can find the acute angle next to x by subtracting from 180°.</p>
+                    <div class="math-box">
+                        180° - 124° = 56°
+                    </div>
+                </div>
+
+                <div class="step-card" id="step-2">
+                    <h2>Step 2: Alternate Interior Angles</h2>
+                    <p>Because the paper is a rectangle, the top and bottom edges are parallel.</p>
+                    <p>The fold line AB acts as a diagonal line connecting them. This creates a "Z" shape.</p>
+                    <p>Due to alternate interior angles, the angle at the top right is equal to the angle at the bottom left. They are both <b>56°</b>.</p>
+                </div>
+
+                <div class="step-card" id="step-3">
+                    <h2>Step 3: Folding the paper</h2>
+                    <p>Now, watch the paper fold along line AB.</p>
+                    <p>When folded, the entire right side of the paper mirrors over the dotted line. The original lines are shown as dashed lines so you can see where the paper used to be.</p>
+                    <p>Notice how our <b>56°</b> angle moves from the right side of point A to the left side, overlapping the paper.</p>
+                </div>
+
+                <div class="step-card" id="step-4">
+                    <h2>Step 4: The top straight line</h2>
+                    <p>Now let's look closely at the top edge of the paper at point A.</p>
+                    <p>This straight line is 180°. It is now made up of three parts:</p>
+                    <ul>
+                        <li>The angle <b>y</b></li>
+                        <li>The folded flap angle (<b>56°</b>)</li>
+                        <li>The empty space where the paper used to be (<b>56°</b>)</li>
+                    </ul>
+                </div>
+
+                <div class="step-card" id="step-5">
+                    <h2>Step 5: Calculate y</h2>
+                    <p>Since the three angles must add up to a straight line (180°), we can find <b>y</b> by subtracting the two 56° angles.</p>
+                    <div class="math-box">
+                        y + 56° + 56° = 180°<br><br>
+                        y = 180° - 112°<br><br>
+                        y = 68°
+                    </div>
+                    <p>You have successfully solved for the missing angle!</p>
+                </div>
+
+                <div class="controls">
+                    <button id="prev-btn" onclick="q1ChangeStep(-1)" disabled>Back</button>
+                    <button id="next-btn" onclick="q1ChangeStep(1)">Next Step</button>
                 </div>
             </div>
+        </main>
+    </div>
 
-            <div class="step-card" id="step-2">
-                <h2>Step 2: Alternate Interior Angles</h2>
-                <p>Because the paper is a rectangle, the top and bottom edges are parallel.</p>
-                <p>The fold line AB acts as a diagonal line connecting them. This creates a "Z" shape.</p>
-                <p>Due to alternate interior angles, the angle at the top right is equal to the angle at the bottom left. They are both <b>56°</b>.</p>
+    <!-- ==========================================
+         QUESTION 2: Five Squares in a Rectangle
+         ========================================== -->
+    <div id="q2-container" class="question-container">
+        <div class="app-container">
+            <div class="question-bar">
+                In the figure, five squares are drawn within a rectangular piece of paper. The left-over part of the paper is shaded. The side of square X measures 4 cm.
             </div>
 
-            <div class="step-card" id="step-3">
-                <h2>Step 3: Folding the paper</h2>
-                <p>Now, watch the paper fold along line AB.</p>
-                <p>When folded, the entire right side of the paper mirrors over the dotted line. The original lines are shown as dashed lines so you can see where the paper used to be.</p>
-                <p>Notice how our <b>56°</b> angle moves from the right side of point A to the left side, overlapping the paper.</p>
-            </div>
+            <div class="content">
+                <div class="diagram-section">
+                    <svg viewBox="0 0 600 400" id="math-svg">
+                        <defs>
+                            <pattern id="diagonalHatch" width="8" height="8" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+                                <line x1="0" y1="0" x2="0" y2="8" style="stroke:#94a3b8; stroke-width:2" />
+                            </pattern>
+                        </defs>
 
-            <div class="step-card" id="step-4">
-                <h2>Step 4: The top straight line</h2>
-                <p>Now let's look closely at the top edge of the paper at point A.</p>
-                <p>This straight line is 180°. It is now made up of three parts:</p>
-                <ul>
-                    <li>The angle <b>y</b></li>
-                    <li>The folded flap angle (<b>56°</b>)</li>
-                    <li>The empty space where the paper used to be (<b>56°</b>)</li>
-                </ul>
-            </div>
+                        <polygon id="sq-left" class="polygon-shape"/>
+                        <polygon id="sq-top" class="polygon-shape"/>
+                        <polygon id="sq-x" class="polygon-shape"/>
+                        <polygon id="sq-z" class="polygon-shape"/>
+                        <polygon id="sq-y" class="polygon-shape"/>
+                        <polygon id="shaded" class="shaded-shape"/>
 
-            <div class="step-card" id="step-5">
-                <h2>Step 5: Calculate y</h2>
-                <p>Since the three angles must add up to a straight line (180°), we can find <b>y</b> by subtracting the two 56° angles.</p>
-                <div class="math-box">
-                    y + 56° + 56° = 180°<br><br>
-                    y = 180° - 112°<br><br>
-                    y = 68°
+                        <text id="lbl-x" class="text-label bold-text">X</text>
+                        <text id="lbl-y" class="text-label bold-text">Y</text>
+                        <text id="lbl-z" class="text-label bold-text" style="opacity: 0;">Z</text>
+
+                        <text id="dim-x" class="text-label dim-text">4 cm</text>
+                        <text id="dim-y" class="text-label dim-text">2 cm</text>
+                        <text id="dim-top" class="text-label dim-text">6 cm</text>
+                        <text id="dim-left-h" class="text-label dim-text" transform="rotate(-90) translate(0, 0)">10 cm</text>
+                        <text id="dim-left-w" class="text-label dim-text">10 cm</text>
+                        <text id="dim-shade" class="text-label dim-text">1.5 cm</text>
+                    </svg>
                 </div>
-                <p>You have successfully solved for the missing angle!</p>
-            </div>
 
-            <div class="controls">
-                <button id="prev-btn" onclick="changeStep(-1)" disabled>Back</button>
-                <button id="next-btn" onclick="changeStep(1)">Next Step</button>
+                <div class="explanation-section">
+                    <div class="step-box" id="q2-step-content">
+                        <h2 id="q2-step-title">Initializing...</h2>
+                        <p id="q2-step-desc">Loading geometry data...</p>
+                    </div>
+
+                    <div class="q2-controls">
+                        <button id="q2-btn-prev" onclick="q2ChangeStep(-1)" disabled>Prev</button>
+                        <div class="progress-dots" id="q2-dots-container"></div>
+                        <button id="q2-btn-next" onclick="q2ChangeStep(1)">Next</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </main>
+    </div>
 
+    <!-- ===== SCRIPTS ===== -->
     <script>
-        const totalSteps = 6;
-        let currentStep = 0;
+        // ==========================================
+        // QUESTION SWITCHING
+        // ==========================================
+        function switchQuestion(num) {
+            document.querySelectorAll('.question-container').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.q-btn').forEach(el => el.classList.remove('active'));
 
-        function updateVisuals() {
-            // Get all SVG elements
+            document.getElementById(`q${num}-container`).classList.add('active');
+            document.querySelectorAll('.q-btn')[num - 1].classList.add('active');
+
+            if (num === 2 && !q2Initialized) {
+                q2Init();
+            }
+        }
+
+        // ==========================================
+        // QUESTION 1: Nancy's Paper Folding
+        // ==========================================
+        const q1TotalSteps = 6;
+        let q1CurrentStep = 0;
+
+        function q1UpdateVisuals() {
             const flap = document.getElementById('flap-group');
             const flapPolygon = document.getElementById('flap-polygon');
             const ghost = document.getElementById('ghost-right');
-            
-            // Get Angle Groups
+
             const angleBottom56 = document.getElementById('angle-bottom-56');
             const angleTopRight56 = document.getElementById('angle-top-right-56');
             const angleFolded56 = document.getElementById('angle-folded-56');
@@ -283,7 +672,6 @@
             const parallelArrows = document.getElementById('parallel-arrows');
             const yLabel = document.getElementById('y-label');
 
-            // Reset step-based visibility
             angleBottom56.classList.remove('show');
             angleTopRight56.classList.remove('show');
             angleFolded56.classList.remove('show');
@@ -291,53 +679,44 @@
             angleStraight.classList.remove('show');
             parallelArrows.classList.remove('show');
 
-            // Reset fold logic
             flap.style.transform = 'rotate3d(0.5594, 0.8289, 0, 0deg)';
-            flapPolygon.setAttribute('fill', '#ffffff'); // pure white before fold
+            flapPolygon.setAttribute('fill', '#ffffff');
             ghost.classList.remove('show');
             yLabel.textContent = 'y';
 
-            // Sequential Application of Logic
-            if (currentStep >= 1) {
-                // Show bottom 56
+            if (q1CurrentStep >= 1) {
                 angleBottom56.classList.add('show');
             }
 
-            if (currentStep >= 2) {
-                // Show parallel arrows and top right 56
+            if (q1CurrentStep >= 2) {
                 parallelArrows.classList.add('show');
                 angleTopRight56.classList.add('show');
             }
-            
-            if (currentStep >= 3) {
-                // Perform the 3D Fold
+
+            if (q1CurrentStep >= 3) {
                 flap.style.transform = 'rotate3d(0.5594, 0.8289, 0, 180deg)';
-                flapPolygon.setAttribute('fill', '#f4f4f4'); // slightly greyed out flap to show it's folded over
-                ghost.classList.add('show'); // show missing lines
-                
-                // Hide the top right angle as it physically moves
+                flapPolygon.setAttribute('fill', '#f4f4f4');
+                ghost.classList.add('show');
+
                 angleTopRight56.classList.remove('show');
-                
-                // Delay showing the new folded angle position so the student watches the flap move first
+
                 setTimeout(() => {
-                    if(currentStep >= 3) {
-                        angleTopRight56.classList.add('show'); // Show it in the "ghost" area
-                        angleTopRight56.style.opacity = "0.4"; // Fade it slightly to indicate it's empty space
-                        angleFolded56.classList.add('show'); // Show it on the flap
+                    if(q1CurrentStep >= 3) {
+                        angleTopRight56.classList.add('show');
+                        angleTopRight56.style.opacity = "0.4";
+                        angleFolded56.classList.add('show');
                     }
                 }, 1200);
             } else {
-                 angleTopRight56.style.opacity = "1"; // Reset opacity if moving backwards
+                 angleTopRight56.style.opacity = "1";
             }
 
-            if (currentStep >= 4) {
-                // Show y arc and straight line arc
+            if (q1CurrentStep >= 4) {
                 angleY.classList.add('show');
                 angleStraight.classList.add('show');
             }
 
-            if (currentStep >= 5) {
-                // Solve for y
+            if (q1CurrentStep >= 5) {
                 yLabel.textContent = '68°';
                 yLabel.style.fontSize = '20px';
             } else {
@@ -345,25 +724,20 @@
             }
         }
 
-        function changeStep(direction) {
-            // Hide current card
-            document.getElementById(`step-${currentStep}`).classList.remove('active');
-            
-            // Update step tracker
-            currentStep += direction;
-            
-            // Boundary checks
-            if (currentStep < 0) currentStep = 0;
-            if (currentStep >= totalSteps) currentStep = totalSteps - 1;
+        function q1ChangeStep(direction) {
+            document.getElementById(`step-${q1CurrentStep}`).classList.remove('active');
 
-            // Show new card
-            document.getElementById(`step-${currentStep}`).classList.add('active');
+            q1CurrentStep += direction;
 
-            // Update buttons
-            document.getElementById('prev-btn').disabled = (currentStep === 0);
-            
+            if (q1CurrentStep < 0) q1CurrentStep = 0;
+            if (q1CurrentStep >= q1TotalSteps) q1CurrentStep = q1TotalSteps - 1;
+
+            document.getElementById(`step-${q1CurrentStep}`).classList.add('active');
+
+            document.getElementById('prev-btn').disabled = (q1CurrentStep === 0);
+
             let nextBtn = document.getElementById('next-btn');
-            if (currentStep === totalSteps - 1) {
+            if (q1CurrentStep === q1TotalSteps - 1) {
                 nextBtn.disabled = true;
                 nextBtn.innerText = "Finish";
             } else {
@@ -371,12 +745,221 @@
                 nextBtn.innerText = "Next Step";
             }
 
-            // Trigger visual updates
-            updateVisuals();
+            q1UpdateVisuals();
         }
 
-        // Initialize visuals on load
-        window.onload = updateVisuals;
+        // ==========================================
+        // QUESTION 2: Five Squares
+        // ==========================================
+        let q2Initialized = false;
+        let q2CurrentStep = 0;
+
+        const Q2_S = 24;
+        const Q2_Ox = (600 - (17.5 * Q2_S)) / 2;
+        const Q2_Oy = (400 - (10 * Q2_S)) / 2;
+
+        const q2Rects = [
+            { id: 'sq-left', x: 0, y: 0, w: 10, h: 10 },
+            { id: 'sq-top', x: 10, y: 0, w: 6, h: 6 },
+            { id: 'sq-x', x: 10, y: 6, w: 4, h: 4 },
+            { id: 'sq-z', x: 14, y: 6, w: 2, h: 2 },
+            { id: 'sq-y', x: 14, y: 8, w: 2, h: 2 },
+            { id: 'shaded', x: 16, y: 0, w: 1.5, h: 10 }
+        ];
+
+        const q2Labels = [
+            { id: 'lbl-x', x: 12, y: 8 },
+            { id: 'lbl-y', x: 15, y: 9 },
+            { id: 'lbl-z', x: 15, y: 7 },
+            { id: 'dim-x', x: 12, y: 10.6 },
+            { id: 'dim-y', x: 15, y: 10.6 },
+            { id: 'dim-top', x: 13, y: -0.6 },
+            { id: 'dim-left-w', x: 5, y: 10.6 },
+            { id: 'dim-shade', x: 16.75, y: -0.6 }
+        ];
+
+        const q2Steps = [
+            {
+                title: "Analyzing the Diagram",
+                text: "The problem states there are <strong>five squares</strong> in total.<br><br>Let's find them: We can clearly see a large left square, a top-right square, square X, and square Y. <br><br>To make it 5 squares, the unmarked rectangular area directly above Y must be the 5th square (let's call it Z).",
+                actions: () => {
+                    q2ResetVisuals();
+                    q2HighlightShapes(['sq-left', 'sq-top', 'sq-x', 'sq-y', 'sq-z']);
+                    q2SetVisible(['lbl-z']);
+                }
+            },
+            {
+                title: "Part (a): Solving for Y",
+                text: "Square X has a side of 4 cm, which means its height is exactly 4 cm.<br><br>Right next to X, we have two stacked squares (Y and Z). Since they span the exact same height as X and are identical squares, they share this height equally.<br><br><strong>Side of Y = 4 cm &divide; 2 = 2 cm</strong>.<br><br><span style='color: var(--highlight-color); font-weight: bold;'>Answer (a): 2 cm</span>",
+                actions: () => {
+                    q2ResetVisuals();
+                    q2SetVisible(['lbl-z', 'dim-x']);
+                    q2HighlightShapes(['sq-x']);
+                    q2HighlightShapes(['sq-y', 'sq-z'], true);
+                    q2HighlightText('dim-y');
+                }
+            },
+            {
+                title: "Part (b): Width of Top Square",
+                text: "To find the length of the entire paper, we first need to determine the width of the top square.<br><br>Look closely at the vertical alignment: The width of the top square matches the combined widths of square X and square Y below it.<br><br><strong>Width = 4 cm (X) + 2 cm (Y) = 6 cm</strong>.",
+                actions: () => {
+                    q2ResetVisuals();
+                    q2SetVisible(['dim-x', 'dim-y']);
+                    q2HighlightShapes(['sq-top'], true);
+                    q2HighlightShapes(['sq-x', 'sq-y', 'sq-z']);
+                    q2HighlightText('dim-top');
+                }
+            },
+            {
+                title: "Part (b): Left Square Dimensions",
+                text: "Now, look at the large left square. Its total height runs perfectly parallel to the combined height of the top square and square X.<br><br>We know Top Square = 6 cm tall, and Square X = 4 cm tall.<br><br><strong>Height of Left Square = 6 + 4 = 10 cm</strong>.<br>Because it's a perfect square, its width is also <strong>10 cm</strong>.",
+                actions: () => {
+                    q2ResetVisuals();
+                    q2SetVisible(['dim-x', 'dim-y', 'dim-top']);
+                    q2HighlightShapes(['sq-left'], true);
+                    q2HighlightShapes(['sq-top', 'sq-x']);
+                    q2SetVisible(['dim-left-h']);
+                    q2HighlightText('dim-left-w');
+                }
+            },
+            {
+                title: "Part (b): Total Paper Length",
+                text: "The question tells us the shaded left-over paper has a breadth of 1.5 cm.<br><br>Add the widths of all shapes stretching horizontally across the paper:<br>Left Square (10) + Top Square (6) + Shaded Region (1.5)<br><br><strong>Total Length = 10 + 6 + 1.5 = 17.5 cm</strong>.<br><br><span style='color: var(--highlight-color); font-weight: bold;'>Answer (b): 17.5 cm</span>",
+                actions: () => {
+                    q2ResetVisuals();
+                    q2SetVisible(['dim-x', 'dim-y', 'dim-top', 'dim-left-w', 'dim-left-h']);
+                    q2HighlightShapes(['sq-left', 'sq-top', 'shaded']);
+                    q2HighlightText('dim-shade');
+                }
+            },
+            {
+                title: "Part (c): 2-cm Squares Conversion",
+                text: "Paul cuts the 5 original squares into smaller 2-cm squares. Let's calculate how many he gets:<br><br>&bull; Left Square (10x10): 25 squares<br>&bull; Top Square (6x6): 9 squares<br>&bull; Square X (4x4): 4 squares<br>&bull; Square Y (2x2): 1 square<br>&bull; Square Z (2x2): 1 square<br><br><strong>Total = 25 + 9 + 4 + 1 + 1 = 40 squares</strong>.",
+                actions: () => {
+                    q2ResetVisuals();
+                    q2SetVisible(['dim-x', 'dim-y', 'dim-top', 'dim-left-w', 'dim-left-h', 'lbl-z']);
+                    q2HighlightShapes(['sq-left', 'sq-top', 'sq-x', 'sq-y', 'sq-z'], true);
+                }
+            },
+            {
+                title: "Part (c): Assembling Cubes",
+                text: "Paul uses these 40 small 2-cm squares to assemble cubes. <br><br>A cube has exactly <strong>6 square faces</strong>. To find out the maximum number of cubes he can form, divide the total squares by 6:<br><br>40 &divide; 6 = 6 with a remainder of 4.<br><br>Paul can make <strong>6 full cubes</strong>.<br><br><span style='color: var(--highlight-color); font-weight: bold;'>Answer (c): 6 cubes</span>",
+                actions: () => {
+                    q2ResetVisuals();
+                    q2SetVisible(['dim-x', 'dim-y', 'dim-top', 'dim-left-w', 'dim-left-h']);
+                    q2HighlightShapes(['sq-left', 'sq-top', 'sq-x', 'sq-y', 'sq-z']);
+                }
+            }
+        ];
+
+        function q2ResetVisuals() {
+            document.querySelectorAll('#q2-container .highlight-shape, #q2-container .highlight-shape-alt').forEach(el => {
+                el.classList.remove('highlight-shape', 'highlight-shape-alt');
+            });
+            document.querySelectorAll('#q2-container .text-label').forEach(el => {
+                el.classList.remove('highlight-text');
+            });
+            document.querySelectorAll('#q2-container .dim-text').forEach(el => {
+                el.style.opacity = '0';
+            });
+            document.getElementById('lbl-z').style.opacity = '0';
+        }
+
+        function q2SetVisible(ids) {
+            ids.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.style.opacity = '1';
+            });
+        }
+
+        function q2HighlightShapes(ids, isAlt = false) {
+            ids.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.add(isAlt ? 'highlight-shape-alt' : 'highlight-shape');
+            });
+        }
+
+        function q2HighlightText(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.style.opacity = '1';
+                el.classList.add('highlight-text');
+            }
+        }
+
+        function q2Init() {
+            // Render Polygons
+            q2Rects.forEach(r => {
+                const el = document.getElementById(r.id);
+                if(!el) return;
+                const pts = [
+                    { x: r.x * Q2_S + Q2_Ox, y: r.y * Q2_S + Q2_Oy },
+                    { x: (r.x + r.w) * Q2_S + Q2_Ox, y: r.y * Q2_S + Q2_Oy },
+                    { x: (r.x + r.w) * Q2_S + Q2_Ox, y: (r.y + r.h) * Q2_S + Q2_Oy },
+                    { x: r.x * Q2_S + Q2_Ox, y: (r.y + r.h) * Q2_S + Q2_Oy }
+                ];
+                el.setAttribute('points', pts.map(p => `${p.x},${p.y}`).join(' '));
+            });
+
+            // Position Standard Text Labels
+            q2Labels.forEach(l => {
+                const el = document.getElementById(l.id);
+                if(!el) return;
+                el.setAttribute('x', l.x * Q2_S + Q2_Ox);
+                el.setAttribute('y', l.y * Q2_S + Q2_Oy);
+            });
+
+            // Position Rotated Text
+            const leftHText = document.getElementById('dim-left-h');
+            const lhX = - (5 * Q2_S + Q2_Oy);
+            const lhY = -1 * Q2_S + Q2_Ox;
+            leftHText.setAttribute('transform', `rotate(-90) translate(${lhX}, ${lhY})`);
+
+            // Create Navigation Dots
+            const dotsContainer = document.getElementById('q2-dots-container');
+            dotsContainer.innerHTML = '';
+            q2Steps.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.className = `dot ${index === 0 ? 'active' : ''}`;
+                dotsContainer.appendChild(dot);
+            });
+
+            q2Initialized = true;
+            q2UpdateUI();
+        }
+
+        function q2UpdateUI() {
+            const step = q2Steps[q2CurrentStep];
+            document.getElementById('q2-step-title').innerHTML = step.title;
+            document.getElementById('q2-step-desc').innerHTML = step.text;
+            step.actions();
+
+            document.getElementById('q2-btn-prev').disabled = q2CurrentStep === 0;
+
+            const nextBtn = document.getElementById('q2-btn-next');
+            if (q2CurrentStep === q2Steps.length - 1) {
+                nextBtn.innerHTML = "Finish"; nextBtn.disabled = true;
+            } else {
+                nextBtn.innerHTML = "Next"; nextBtn.disabled = false;
+            }
+
+            document.querySelectorAll('#q2-dots-container .dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === q2CurrentStep);
+            });
+        }
+
+        function q2ChangeStep(dir) {
+            q2CurrentStep = Math.max(0, Math.min(q2Steps.length - 1, q2CurrentStep + dir));
+            q2UpdateUI();
+        }
+
+        // ==========================================
+        // INITIALIZE ON LOAD
+        // ==========================================
+        window.onload = function() {
+            q1UpdateVisuals();
+        };
     </script>
+
 </body>
 </html>
