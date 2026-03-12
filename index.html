@@ -701,6 +701,10 @@
                 <span class="q-num">2</span>
                 <span>Five Squares in a Rectangle</span>
             </button>
+            <button class="q-btn" onclick="switchQuestion(3)">
+                <span class="q-num">3</span>
+                <span>Orange Juice Bottles</span>
+            </button>
         </div>
         <div class="sidebar-actions">
             <button class="print-btn" onclick="openPrintModal()">
@@ -881,6 +885,100 @@
             </div>
         </div>
 
+        <!-- ==========================================
+             QUESTION 3: Orange Juice Bottles
+             ========================================== -->
+        <div id="q3-container" class="question-container">
+            <div class="app-container">
+                <div class="question-bar">
+                    Ann filled some orange juice into large and small bottles. She filled 3/5 of the orange juice into 4 large bottles and 3/4 of the remaining orange juice into 9 small bottles.
+                </div>
+
+                <div class="content">
+                    <div class="diagram-section">
+                        <svg viewBox="0 0 600 360" id="q3-svg">
+                            <!-- Title -->
+                            <text id="q3-title" x="300" y="30" text-anchor="middle" font-size="15" fill="#64748b" font-family="Century Gothic, sans-serif">Total Orange Juice</text>
+
+                            <!-- Main bar background -->
+                            <rect x="40" y="55" width="520" height="55" rx="5" fill="#f8fafc" stroke="#0f172a" stroke-width="2"/>
+
+                            <!-- Colored sections (hidden initially) -->
+                            <rect id="q3-sec-large" x="40" y="55" width="312" height="55" rx="5" fill="transparent" stroke="none"/>
+                            <rect id="q3-sec-remain" x="352" y="55" width="208" height="55" fill="transparent" stroke="none" rx="5"/>
+                            <rect id="q3-sec-small" x="352" y="55" width="156" height="55" fill="transparent" stroke="none"/>
+                            <rect id="q3-sec-left" x="508" y="55" width="52" height="55" fill="transparent" stroke="none" rx="5"/>
+
+                            <!-- Segment divider lines (10 equal parts, each 52px) -->
+                            <line x1="92" y1="55" x2="92" y2="110" stroke="#cbd5e1" stroke-width="1"/>
+                            <line x1="144" y1="55" x2="144" y2="110" stroke="#cbd5e1" stroke-width="1"/>
+                            <line x1="196" y1="55" x2="196" y2="110" stroke="#cbd5e1" stroke-width="1"/>
+                            <line x1="248" y1="55" x2="248" y2="110" stroke="#cbd5e1" stroke-width="1"/>
+                            <line x1="300" y1="55" x2="300" y2="110" stroke="#cbd5e1" stroke-width="1"/>
+                            <line x1="352" y1="55" x2="352" y2="110" stroke="#cbd5e1" stroke-width="1"/>
+                            <line x1="404" y1="55" x2="404" y2="110" stroke="#cbd5e1" stroke-width="1"/>
+                            <line x1="456" y1="55" x2="456" y2="110" stroke="#cbd5e1" stroke-width="1"/>
+                            <line x1="508" y1="55" x2="508" y2="110" stroke="#cbd5e1" stroke-width="1"/>
+
+                            <!-- Bar border on top -->
+                            <rect x="40" y="55" width="520" height="55" rx="5" fill="none" stroke="#0f172a" stroke-width="2"/>
+
+                            <!-- Section dividers (thick, shown per step) -->
+                            <line id="q3-div1" x1="352" y1="50" x2="352" y2="115" stroke="#0f172a" stroke-width="2.5" opacity="0"/>
+                            <line id="q3-div2" x1="508" y1="50" x2="508" y2="115" stroke="#0f172a" stroke-width="2.5" opacity="0"/>
+
+                            <!-- Fraction labels above bar -->
+                            <text id="q3-lbl-large" x="196" y="45" text-anchor="middle" font-size="17" font-weight="bold" fill="#92400e" font-family="Century Gothic, sans-serif" opacity="0">3/5</text>
+                            <text id="q3-lbl-remain" x="456" y="45" text-anchor="middle" font-size="17" font-weight="bold" fill="#0f172a" font-family="Century Gothic, sans-serif" opacity="0">2/5</text>
+                            <text id="q3-lbl-small" x="430" y="45" text-anchor="middle" font-size="17" font-weight="bold" fill="#065f46" font-family="Century Gothic, sans-serif" opacity="0">3/10</text>
+                            <text id="q3-lbl-left" x="534" y="45" text-anchor="middle" font-size="15" font-weight="bold" fill="#475569" font-family="Century Gothic, sans-serif" opacity="0">1/10</text>
+
+                            <!-- Inside-bar labels -->
+                            <text id="q3-txt-large" x="196" y="88" text-anchor="middle" font-size="13" font-weight="bold" fill="#92400e" font-family="Century Gothic, sans-serif" opacity="0">4 Large Bottles</text>
+                            <text id="q3-txt-small" x="430" y="88" text-anchor="middle" font-size="13" font-weight="bold" fill="#065f46" font-family="Century Gothic, sans-serif" opacity="0">9 Small Bottles</text>
+                            <text id="q3-txt-left" x="534" y="88" text-anchor="middle" font-size="12" font-weight="bold" fill="#475569" font-family="Century Gothic, sans-serif" opacity="0">Left</text>
+
+                            <!-- Bracket for "Remaining" -->
+                            <g id="q3-bracket" opacity="0">
+                                <path d="M 352 120 L 352 130 Q 352 135 357 135 L 448 135 Q 456 135 456 140 L 456 142 M 456 142 L 456 140 Q 456 135 464 135 L 555 135 Q 560 135 560 130 L 560 120" fill="none" stroke="#334155" stroke-width="1.5"/>
+                                <text x="456" y="158" text-anchor="middle" font-size="14" fill="#334155" font-family="Century Gothic, sans-serif" font-weight="bold">Remaining = 2/5</text>
+                            </g>
+
+                            <!-- Per-bottle annotations -->
+                            <g id="q3-ann-bottles" opacity="0">
+                                <text x="196" y="140" text-anchor="middle" font-size="13" fill="#92400e" font-family="Century Gothic, sans-serif">4 bottles = 3/5</text>
+                                <text x="196" y="160" text-anchor="middle" font-size="13" fill="#92400e" font-family="Century Gothic, sans-serif" font-weight="bold">1 bottle = 3/20</text>
+                                <text x="430" y="140" text-anchor="middle" font-size="13" fill="#065f46" font-family="Century Gothic, sans-serif">9 bottles = 3/10</text>
+                                <text x="430" y="160" text-anchor="middle" font-size="13" fill="#065f46" font-family="Century Gothic, sans-serif" font-weight="bold">1 bottle = 1/30</text>
+                            </g>
+
+                            <!-- Equation area -->
+                            <text id="q3-eq1" x="300" y="200" text-anchor="middle" font-size="15" fill="#0f172a" font-family="Century Gothic, sans-serif" font-weight="bold" opacity="0"></text>
+                            <text id="q3-eq2" x="300" y="228" text-anchor="middle" font-size="15" fill="#0f172a" font-family="Century Gothic, sans-serif" font-weight="bold" opacity="0"></text>
+                            <text id="q3-eq3" x="300" y="256" text-anchor="middle" font-size="15" fill="#0f172a" font-family="Century Gothic, sans-serif" font-weight="bold" opacity="0"></text>
+                            <text id="q3-eq4" x="300" y="290" text-anchor="middle" font-size="20" fill="#e11d48" font-family="Century Gothic, sans-serif" font-weight="bold" opacity="0"></text>
+
+                            <!-- "1" label at left of bar -->
+                            <text x="28" y="88" text-anchor="middle" font-size="14" fill="#94a3b8" font-family="Century Gothic, sans-serif" font-weight="bold">1</text>
+                        </svg>
+                    </div>
+
+                    <div class="explanation-section">
+                        <div class="step-box" id="q3-step-content">
+                            <h2 id="q3-step-title">Loading...</h2>
+                            <p id="q3-step-desc">Loading...</p>
+                        </div>
+
+                        <div class="controls">
+                            <button id="q3-btn-prev" onclick="q3ChangeStep(-1)" disabled>Prev</button>
+                            <div class="progress-dots" id="q3-dots-container"></div>
+                            <button id="q3-btn-next" onclick="q3ChangeStep(1)">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
@@ -897,7 +995,12 @@
             if (num === 2 && !q2Initialized) {
                 q2Init();
             }
+            if (num === 3 && !q3Inited) {
+                q3Init();
+                q3Inited = true;
+            }
         }
+        let q3Inited = false;
 
         // ==========================================
         // QUESTION 1: Nancy's Paper Folding
@@ -1238,6 +1341,161 @@
         }
 
         // ==========================================
+        // QUESTION 3: Orange Juice Bottles
+        // ==========================================
+        let q3CurrentStep = 0;
+
+        const q3Steps = [
+            {
+                title: "Understanding the Problem",
+                text: "Ann has some orange juice.<br><br>&bull; She fills <b>3/5</b> into <b>4 large bottles</b><br>&bull; Then <b>3/4</b> of the <b>remaining</b> juice into <b>9 small bottles</b><br><br>We need to find:<br>(a) What fraction went into the 9 small bottles?<br>(b) How many litres of juice did Ann have?",
+                actions: () => {
+                    q3Reset();
+                    q3Show(['q3-title']);
+                }
+            },
+            {
+                title: "Part (a): Remaining after Large Bottles",
+                text: "Ann fills <b>3/5</b> of the total juice into 4 large bottles.<br><br>The remaining fraction is:<br><br><div class='math-box'>Remaining = 1 &minus; 3/5 = 2/5</div>",
+                actions: () => {
+                    q3Reset();
+                    q3Show(['q3-title', 'q3-div1', 'q3-lbl-large', 'q3-txt-large', 'q3-lbl-remain', 'q3-bracket']);
+                    q3Color('q3-sec-large', '#fef3c7', '#b45309');
+                    q3Color('q3-sec-remain', '#f1f5f9', '#64748b');
+                }
+            },
+            {
+                title: "Part (a): Fraction in Small Bottles",
+                text: "She fills <b>3/4</b> of the remaining <b>2/5</b> into 9 small bottles.<br><br>Using the unitary method:<br><br><div class='math-box'>3/4 &times; 2/5 = 6/20 = 3/10</div><br><span style='color: var(--highlight-color); font-weight: bold;'>Answer (a): 3/10</span>",
+                actions: () => {
+                    q3Reset();
+                    q3Show(['q3-title', 'q3-div1', 'q3-div2', 'q3-lbl-large', 'q3-txt-large', 'q3-lbl-small', 'q3-txt-small']);
+                    q3Color('q3-sec-large', '#fef3c7', '#b45309');
+                    q3Color('q3-sec-small', '#d1fae5', '#065f46');
+                    q3Color('q3-sec-left', '#f1f5f9', '#64748b');
+                }
+            },
+            {
+                title: "Part (b): Leftover Fraction",
+                text: "Now let's find the fraction of juice left over:<br><br><div class='math-box'>Leftover = 1 &minus; 3/5 &minus; 3/10<br><br>= 10/10 &minus; 6/10 &minus; 3/10<br><br>= 1/10</div><br>So <b>1/10</b> of the total juice is left over.",
+                actions: () => {
+                    q3Reset();
+                    q3Show(['q3-title', 'q3-div1', 'q3-div2', 'q3-lbl-large', 'q3-txt-large', 'q3-lbl-small', 'q3-txt-small', 'q3-lbl-left', 'q3-txt-left']);
+                    q3Color('q3-sec-large', '#fef3c7', '#b45309');
+                    q3Color('q3-sec-small', '#d1fae5', '#065f46');
+                    q3Color('q3-sec-left', '#e0e7ff', '#4f46e5');
+                }
+            },
+            {
+                title: "Part (b): Unitary Method &mdash; Per Bottle",
+                text: "Find the fraction of juice in <b>1 bottle</b> of each type:<br><br><div class='math-box'>1 large bottle = 3/5 &divide; 4 = 3/20<br><br>1 small bottle = 3/10 &divide; 9 = 3/90 = 1/30</div>",
+                actions: () => {
+                    q3Reset();
+                    q3Show(['q3-title', 'q3-div1', 'q3-div2', 'q3-lbl-large', 'q3-lbl-small', 'q3-lbl-left', 'q3-txt-left', 'q3-ann-bottles']);
+                    q3Color('q3-sec-large', '#fef3c7', '#b45309');
+                    q3Color('q3-sec-small', '#d1fae5', '#065f46');
+                    q3Color('q3-sec-left', '#e0e7ff', '#4f46e5');
+                }
+            },
+            {
+                title: "Part (b): Setting Up the Equation",
+                text: "Ann tried to fill <b>1 more large bottle</b> with the leftover but was <b>short 0.6 &#8467;</b>.<br><br><div class='math-box'>Leftover &minus; 1 large bottle<br>= 1/10 &minus; 3/20<br>= 2/20 &minus; 3/20<br>= &minus;1/20</div><br>Being short means: <b>1/20</b> of the total = <b>0.6 &#8467;</b>",
+                actions: () => {
+                    q3Reset();
+                    q3Show(['q3-title', 'q3-div1', 'q3-div2', 'q3-lbl-large', 'q3-lbl-small', 'q3-lbl-left']);
+                    q3Color('q3-sec-large', '#fef3c7', '#b45309');
+                    q3Color('q3-sec-small', '#d1fae5', '#065f46');
+                    q3Color('q3-sec-left', '#fce7f3', '#e11d48');
+                    q3ShowEq('1/20 of total = 0.6 &#8467;', '', '', '');
+                }
+            },
+            {
+                title: "Part (b): Solving for Total",
+                text: "From the equation:<br><br><div class='math-box'>1/20 of total = 0.6 &#8467;<br><br>Total = 0.6 &times; 20 = 12 &#8467;</div><br><b>Verify:</b> She fills 1 small bottle instead, with 0.8 &#8467; left:<br>Leftover &minus; 1 small bottle = 1/10 &minus; 1/30 = 2/30 = 1/15<br>12 &times; 1/15 = <b>0.8 &#8467;</b> &#10003;<br><br><span style='color: var(--highlight-color); font-weight: bold;'>Answer (b): 12 litres</span>",
+                actions: () => {
+                    q3Reset();
+                    q3Show(['q3-title', 'q3-div1', 'q3-div2', 'q3-lbl-large', 'q3-lbl-small', 'q3-lbl-left']);
+                    q3Color('q3-sec-large', '#fef3c7', '#b45309');
+                    q3Color('q3-sec-small', '#d1fae5', '#065f46');
+                    q3Color('q3-sec-left', '#e0e7ff', '#4f46e5');
+                    q3ShowEq('1/20 of total = 0.6 &#8467;', 'Total = 0.6 &times; 20', '', 'Total = 12 litres');
+                }
+            }
+        ];
+
+        function q3Reset() {
+            ['q3-sec-large','q3-sec-remain','q3-sec-small','q3-sec-left'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) { el.setAttribute('fill', 'transparent'); el.setAttribute('stroke', 'none'); }
+            });
+            ['q3-title','q3-div1','q3-div2','q3-lbl-large','q3-lbl-remain','q3-lbl-small','q3-lbl-left',
+             'q3-txt-large','q3-txt-small','q3-txt-left','q3-bracket','q3-ann-bottles',
+             'q3-eq1','q3-eq2','q3-eq3','q3-eq4'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.style.opacity = '0';
+            });
+        }
+
+        function q3Show(ids) {
+            ids.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.style.opacity = '1';
+            });
+        }
+
+        function q3Color(id, fill, stroke) {
+            const el = document.getElementById(id);
+            if (el) { el.setAttribute('fill', fill); el.setAttribute('stroke', stroke); el.setAttribute('stroke-width', '2'); }
+        }
+
+        function q3ShowEq(l1, l2, l3, l4) {
+            const ids = ['q3-eq1','q3-eq2','q3-eq3','q3-eq4'];
+            const vals = [l1, l2, l3, l4];
+            vals.forEach((v, i) => {
+                const el = document.getElementById(ids[i]);
+                if (el && v) { el.innerHTML = v; el.style.opacity = '1'; }
+            });
+        }
+
+        function q3UpdateUI() {
+            const step = q3Steps[q3CurrentStep];
+            document.getElementById('q3-step-title').innerHTML = step.title;
+            document.getElementById('q3-step-desc').innerHTML = step.text;
+            step.actions();
+
+            document.getElementById('q3-btn-prev').disabled = q3CurrentStep === 0;
+
+            const nextBtn = document.getElementById('q3-btn-next');
+            if (q3CurrentStep === q3Steps.length - 1) {
+                nextBtn.innerHTML = "Finish";
+                nextBtn.disabled = true;
+            } else {
+                nextBtn.innerHTML = "Next";
+                nextBtn.disabled = false;
+            }
+
+            document.querySelectorAll('#q3-dots-container .dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === q3CurrentStep);
+            });
+        }
+
+        function q3ChangeStep(dir) {
+            q3CurrentStep = Math.max(0, Math.min(q3Steps.length - 1, q3CurrentStep + dir));
+            q3UpdateUI();
+        }
+
+        function q3Init() {
+            const dotsContainer = document.getElementById('q3-dots-container');
+            dotsContainer.innerHTML = '';
+            q3Steps.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.className = `dot ${index === 0 ? 'active' : ''}`;
+                dotsContainer.appendChild(dot);
+            });
+            q3UpdateUI();
+        }
+
+        // ==========================================
         // PRINT FUNCTIONALITY
         // ==========================================
         function openPrintModal() {
@@ -1328,10 +1586,35 @@
             }
         }
 
-        function buildQuestionsPage() {
+        function getQ3SvgForPrint() {
+            const svg = document.getElementById('q3-svg');
+            const clone = svg.cloneNode(true);
+            clone.removeAttribute('id');
+            // Show the bar with all 3 colored sections and labels
+            const large = clone.querySelector('#q3-sec-large');
+            if (large) { large.setAttribute('fill', '#fef3c7'); large.setAttribute('stroke', '#b45309'); large.setAttribute('stroke-width', '2'); }
+            const small = clone.querySelector('#q3-sec-small');
+            if (small) { small.setAttribute('fill', '#d1fae5'); small.setAttribute('stroke', '#065f46'); small.setAttribute('stroke-width', '2'); }
+            const left = clone.querySelector('#q3-sec-left');
+            if (left) { left.setAttribute('fill', '#e2e8f0'); left.setAttribute('stroke', '#64748b'); left.setAttribute('stroke-width', '2'); }
+            // Show key labels
+            ['q3-title','q3-div1','q3-div2','q3-lbl-large','q3-lbl-small','q3-lbl-left','q3-txt-large','q3-txt-small','q3-txt-left'].forEach(id => {
+                const el = clone.querySelector('#' + id);
+                if (el) el.style.opacity = '1';
+            });
+            // Hide equations and annotations
+            ['q3-eq1','q3-eq2','q3-eq3','q3-eq4','q3-bracket','q3-ann-bottles','q3-lbl-remain','q3-sec-remain'].forEach(id => {
+                const el = clone.querySelector('#' + id);
+                if (el) el.style.opacity = '0';
+            });
+            clone.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+            return clone.outerHTML;
+        }
+
+        function buildQuestionsPages() {
             return `
                 <div class="print-page">
-                    <div class="print-page-title">Geometry Worksheet</div>
+                    <div class="print-page-title">Maths Worksheet</div>
                     <div class="print-half">
                         <div class="print-q-header">
                             <div class="print-q-num">1</div>
@@ -1356,10 +1639,26 @@
                         </div>
                         <div class="print-diagram">${getQ2SvgForPrint()}</div>
                     </div>
+                </div>
+                <div class="print-page">
+                    <div class="print-page-title">Maths Worksheet (cont.)</div>
+                    <div class="print-half">
+                        <div class="print-q-header">
+                            <div class="print-q-num">3</div>
+                            <div class="print-q-label">Orange Juice Bottles</div>
+                        </div>
+                        <div class="print-q-text">
+                            Ann filled some orange juice into large and small bottles. She filled 3/5 of the orange juice into 4 large bottles and 3/4 of the remaining orange juice into 9 small bottles.<br><br>
+                            (a) What fraction of the orange juice was filled into the 9 small bottles? [1]<br><br>
+                            (b) After that, she wanted to fill 1 large bottle with the left-over orange juice but was short of 0.6 &#8467;. Instead, she filled another 1 small bottle and had 0.8 &#8467; of orange juice left in the end. How many litres of orange juice did Ann have at first?
+                        </div>
+                        <div class="print-diagram">${getQ3SvgForPrint()}</div>
+                    </div>
+                    <div class="print-half"></div>
                 </div>`;
         }
 
-        function buildAnswersPage() {
+        function buildAnswersPages() {
             return `
                 <div class="print-page">
                     <div class="print-page-title">Answer Key</div>
@@ -1371,18 +1670,16 @@
                         <div class="print-answer-box">
                             <h3>Solution</h3>
                             <div class="print-answer-item">
-                                <strong>Step 1:</strong> Angles on a straight line at B:<br>
-                                180° − 124° = 56°
+                                <strong>Step 1:</strong> Angles on a straight line at B: 180° − 124° = 56°
                             </div>
                             <div class="print-answer-item">
                                 <strong>Step 2:</strong> By alternate interior angles (parallel edges), the angle at A (top right) = 56°
                             </div>
                             <div class="print-answer-item">
-                                <strong>Step 3:</strong> When folded, the 56° angle mirrors to the left of A. The top edge at A is a straight line (180°), composed of three angles: y, 56° (folded), and 56° (original).
+                                <strong>Step 3:</strong> When folded, the 56° angle mirrors to the left of A. The top edge is 180°, composed of: y, 56° (folded), 56° (original).
                             </div>
                             <div class="print-answer-final">
-                                y + 56° + 56° = 180°<br>
-                                y = 180° − 112° = <strong>68°</strong>
+                                y + 56° + 56° = 180° &rarr; y = 180° − 112° = <strong>68°</strong>
                             </div>
                         </div>
                     </div>
@@ -1394,24 +1691,54 @@
                         <div class="print-answer-box">
                             <h3>Solution</h3>
                             <div class="print-answer-item">
-                                <strong>(a)</strong> Square X has side 4 cm. Squares Y and Z are stacked beside X with the same total height.<br>
-                                Side of Y = 4 ÷ 2 = <strong>2 cm</strong>
+                                <strong>(a)</strong> Squares Y and Z stacked beside X share its height: Side of Y = 4 ÷ 2 = <strong>2 cm</strong>
                             </div>
                             <div class="print-answer-item">
-                                <strong>(b)</strong> Top square width = 4 + 2 = 6 cm. Left square height = 6 + 4 = 10 cm (also its width, since it's a square). Shaded strip = 1.5 cm.<br>
+                                <strong>(b)</strong> Top square = 4 + 2 = 6 cm. Left square = 6 + 4 = 10 cm. Shaded = 1.5 cm.
                             </div>
                             <div class="print-answer-final" style="margin-bottom: 3mm;">
                                 Length = 10 + 6 + 1.5 = <strong>17.5 cm</strong>
                             </div>
                             <div class="print-answer-item">
-                                <strong>(c)</strong> Number of 2-cm squares: 10×10→25, 6×6→9, 4×4→4, 2×2→1, 2×2→1. Total = 40.<br>
-                                Each cube needs 6 faces: 40 ÷ 6 = 6 remainder 4.
+                                <strong>(c)</strong> 2-cm squares: 25 + 9 + 4 + 1 + 1 = 40. Cubes: 40 ÷ 6 = 6 R 4.
                             </div>
                             <div class="print-answer-final">
                                 Greatest number of cubes = <strong>6</strong>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="print-page">
+                    <div class="print-page-title">Answer Key (cont.)</div>
+                    <div class="print-half">
+                        <div class="print-q-header">
+                            <div class="print-q-num">3</div>
+                            <div class="print-q-label">Orange Juice Bottles</div>
+                        </div>
+                        <div class="print-answer-box">
+                            <h3>Solution (Unitary Method)</h3>
+                            <div class="print-answer-item">
+                                <strong>(a)</strong> Remaining after large bottles = 1 − 3/5 = 2/5<br>
+                                Fraction in small bottles = 3/4 × 2/5 = 6/20 = <strong>3/10</strong>
+                            </div>
+                            <div class="print-answer-final" style="margin-bottom: 3mm;">
+                                Answer (a): <strong>3/10</strong>
+                            </div>
+                            <div class="print-answer-item">
+                                <strong>(b)</strong> Leftover = 1 − 3/5 − 3/10 = 1/10<br>
+                                1 large bottle = 3/5 ÷ 4 = 3/20 &nbsp;|&nbsp; 1 small bottle = 3/10 ÷ 9 = 1/30<br><br>
+                                Leftover − 1 large bottle = 1/10 − 3/20 = −1/20<br>
+                                Short by 0.6 &#8467; &rarr; 1/20 of total = 0.6 &#8467;<br>
+                                Total = 0.6 × 20 = <strong>12 &#8467;</strong><br><br>
+                                <em>Verify:</em> Leftover − 1 small bottle = 1/10 − 1/30 = 1/15<br>
+                                12 × 1/15 = 0.8 &#8467; ✓
+                            </div>
+                            <div class="print-answer-final">
+                                Answer (b): <strong>12 litres</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="print-half"></div>
                 </div>`;
         }
 
@@ -1422,10 +1749,10 @@
             let html = '';
 
             if (mode === 'questions' || mode === 'both') {
-                html += buildQuestionsPage();
+                html += buildQuestionsPages();
             }
             if (mode === 'answers' || mode === 'both') {
-                html += buildAnswersPage();
+                html += buildAnswersPages();
             }
 
             printArea.innerHTML = html;
