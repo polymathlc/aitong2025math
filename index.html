@@ -1827,14 +1827,34 @@
                 }
             },
             {
-                title: 'Step 1: Find the Percentage for Food',
-                text: 'Transport = 2/5 × Food<br><br>24% = 2/5 × Food<br><br>Food = 24% × 5/2<br>Food = 24% × 2.5<br>= <strong style="color:#e11d48; font-size:1.1em;">60%</strong>',
+                title: 'Step 1: Set Up Units',
+                text: 'Transport = 2/5 of Food.<br><br>Let Food = <strong>5 units</strong><br>Then Transport = <strong>2 units</strong>',
                 actions() {
                     q5Reset();
                     q5Show('q5-hi-food');
                     q5Show('q5-hi-transport');
+                    q5ShowEq('q5-eq1', 'Food = 5u, Transport = 2u');
+                }
+            },
+            {
+                title: 'Step 2: Find the Value of 1 Unit',
+                text: 'Transport = 24%<br>2 units = 24%<br><strong>1 unit = 24% ÷ 2 = 12%</strong>',
+                actions() {
+                    q5Reset();
+                    q5Show('q5-hi-transport');
+                    q5ShowEq('q5-eq1', '2u = 24%');
+                    q5ShowEq('q5-eq2', '1u = 12%');
+                }
+            },
+            {
+                title: 'Step 3: Find the Percentage for Food',
+                text: 'Food = 5 units<br>= 5 × 12%<br>= <strong style="color:#e11d48; font-size:1.1em;">60%</strong>',
+                actions() {
+                    q5Reset();
+                    q5Show('q5-hi-food');
                     q5Show('q5-pct-food');
-                    q5ShowEq('q5-eq1', '24% = 2/5 × Food → Food = 60%');
+                    q5ShowEq('q5-eq1', 'Food = 5u = 5 × 12%');
+                    q5ShowEq('q5-eq2', '= 60%');
                 }
             },
             {
@@ -1848,7 +1868,7 @@
                 }
             },
             {
-                title: 'Step 2: Find the Percentage for Savings',
+                title: 'Step 4: Find the Percentage for Savings',
                 text: 'Savings = 25% of Transport<br>= 25% × 24%<br>= <strong>6%</strong>',
                 actions() {
                     q5Reset();
@@ -1860,8 +1880,8 @@
                 }
             },
             {
-                title: 'Step 3: Find the Percentage for Clothes',
-                text: 'All categories add up to 100%:<br><br>Clothes = 100% − Food − Transport − Savings<br>= 100% − 60% − 24% − 6%<br>= <strong>10%</strong>',
+                title: 'Step 5: Find the Percentage for Clothes',
+                text: 'All categories add up to 100%:<br><br>Clothes = 100% − 60% − 24% − 6%<br>= <strong>10%</strong>',
                 actions() {
                     q5Reset();
                     q5Show('q5-pct-food');
@@ -1872,7 +1892,7 @@
                 }
             },
             {
-                title: 'Step 4: Find Total Money from Savings',
+                title: 'Step 6: Find Total Money from Savings',
                 text: 'Isabelle saved <strong>$90</strong>, and savings = <strong>6%</strong> of total.<br><br>6% = $90<br>1% = $90 ÷ 6 = $15<br>100% = $15 × 100 = <strong>$1500</strong>',
                 actions() {
                     q5Reset();
@@ -1885,7 +1905,7 @@
                 }
             },
             {
-                title: 'Step 5: Total Amount Spent',
+                title: 'Step 7: Total Amount Spent',
                 text: 'Total money Isabelle had = <strong>$1500</strong><br><br>Amount spent = Total − Savings<br>= $1500 − $90<br>= <strong style="color:#e11d48; font-size:1.2em;">$1410</strong>',
                 actions() {
                     q5Reset();
@@ -2273,9 +2293,9 @@
                         <div class="print-answer-box">
                             <h3>Solution</h3>
                             <div class="print-answer-item">
-                                <strong>(a)</strong> Transport = 2/5 &times; Food<br>
-                                24% = 2/5 &times; Food<br>
-                                Food = 24% &times; 5/2 = <strong>60%</strong>
+                                <strong>(a)</strong> Let Food = 5u, Transport = 2u<br>
+                                2u = 24% &rarr; 1u = 12%<br>
+                                Food = 5u = 5 &times; 12% = <strong>60%</strong>
                             </div>
                             <div class="print-answer-final" style="margin-bottom: 3mm;">
                                 Answer (a): <strong>60%</strong>
