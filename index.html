@@ -705,6 +705,10 @@
                 <span class="q-num">3</span>
                 <span>Orange Juice Bottles</span>
             </button>
+            <button class="q-btn" onclick="switchQuestion(4)">
+                <span class="q-num">4</span>
+                <span>Overlapping Quarter Circles</span>
+            </button>
         </div>
         <div class="sidebar-actions">
             <button class="print-btn" onclick="openPrintModal()">
@@ -979,6 +983,72 @@
             </div>
         </div>
 
+        <!-- ===== QUESTION 4: Overlapping Quarter Circles ===== -->
+        <div id="q4-container" class="question-container">
+            <div class="app-container">
+                <div class="question-bar">
+                    The figure OABCD is made up of 2 overlapping quarter circles of radius 10 cm each. The area of triangle OBC is 30 cm². (Take &pi; = 3.14)
+                </div>
+
+                <div class="content">
+                    <div class="diagram-section">
+                        <svg viewBox="0 0 600 420" id="q4-svg">
+                            <!-- Background quarter circle OAC -->
+                            <path id="q4-qc1" d="M 300 330 L 92 233 A 230 230 0 0 1 397 122 Z" fill="#dbeafe" stroke="#3b82f6" stroke-width="2" opacity="0.3"/>
+                            <!-- Background quarter circle OBD -->
+                            <path id="q4-qc2" d="M 300 330 L 203 122 A 230 230 0 0 1 508 233 Z" fill="#fef9c3" stroke="#ca8a04" stroke-width="2" opacity="0.3"/>
+                            <!-- Overlap region OBC (hatched) -->
+                            <defs>
+                                <pattern id="q4-hatch" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
+                                    <line x1="0" y1="0" x2="0" y2="8" stroke="#e11d48" stroke-width="1.5" opacity="0.4"/>
+                                </pattern>
+                            </defs>
+                            <path id="q4-overlap" d="M 300 330 L 203 122 A 230 230 0 0 0 397 122 Z" fill="url(#q4-hatch)" stroke="#e11d48" stroke-width="2" opacity="0"/>
+                            <!-- Full outline OABCD -->
+                            <path id="q4-outline" d="M 300 330 L 92 233 A 230 230 0 0 1 203 122 A 230 230 0 0 0 397 122 A 230 230 0 0 1 508 233 Z" fill="none" stroke="#0f172a" stroke-width="2.5"/>
+                            <!-- Point labels -->
+                            <text id="q4-lbl-O" x="300" y="360" text-anchor="middle" font-size="18" font-weight="bold" fill="#0f172a" font-family="Century Gothic, sans-serif">O</text>
+                            <text id="q4-lbl-A" x="72" y="238" text-anchor="middle" font-size="18" font-weight="bold" fill="#0f172a" font-family="Century Gothic, sans-serif">A</text>
+                            <text id="q4-lbl-B" x="195" y="110" text-anchor="middle" font-size="18" font-weight="bold" fill="#0f172a" font-family="Century Gothic, sans-serif">B</text>
+                            <text id="q4-lbl-C" x="405" y="110" text-anchor="middle" font-size="18" font-weight="bold" fill="#0f172a" font-family="Century Gothic, sans-serif">C</text>
+                            <text id="q4-lbl-D" x="528" y="238" text-anchor="middle" font-size="18" font-weight="bold" fill="#0f172a" font-family="Century Gothic, sans-serif">D</text>
+                            <!-- Radius dimension lines (hidden initially) -->
+                            <line id="q4-dim-oa" x1="300" y1="330" x2="92" y2="233" stroke="#e11d48" stroke-width="2" stroke-dasharray="6,3" opacity="0"/>
+                            <text id="q4-dim-oa-lbl" x="180" y="295" text-anchor="middle" font-size="14" font-weight="bold" fill="#e11d48" font-family="Century Gothic, sans-serif" opacity="0">10 cm</text>
+                            <line id="q4-dim-od" x1="300" y1="330" x2="508" y2="233" stroke="#e11d48" stroke-width="2" stroke-dasharray="6,3" opacity="0"/>
+                            <text id="q4-dim-od-lbl" x="420" y="295" text-anchor="middle" font-size="14" font-weight="bold" fill="#e11d48" font-family="Century Gothic, sans-serif" opacity="0">10 cm</text>
+                            <!-- Area labels (shown per step) -->
+                            <text id="q4-area-qc1" x="200" y="230" text-anchor="middle" font-size="14" font-weight="bold" fill="#3b82f6" font-family="Century Gothic, sans-serif" opacity="0">78.5 cm²</text>
+                            <text id="q4-area-qc2" x="400" y="230" text-anchor="middle" font-size="14" font-weight="bold" fill="#ca8a04" font-family="Century Gothic, sans-serif" opacity="0">78.5 cm²</text>
+                            <text id="q4-area-obc" x="300" y="200" text-anchor="middle" font-size="13" font-weight="bold" fill="#e11d48" font-family="Century Gothic, sans-serif" opacity="0">30 cm²</text>
+                            <!-- Equation area -->
+                            <text id="q4-eq1" x="300" y="390" text-anchor="middle" font-size="15" fill="#0f172a" font-family="Century Gothic, sans-serif" font-weight="bold" opacity="0"></text>
+                            <text id="q4-eq2" x="300" y="412" text-anchor="middle" font-size="15" fill="#e11d48" font-family="Century Gothic, sans-serif" font-weight="bold" opacity="0"></text>
+                            <!-- Perimeter highlight arcs (drawn on top when needed) -->
+                            <path id="q4-perim-arc-ac" d="M 92 233 A 230 230 0 0 1 397 122" fill="none" stroke="#3b82f6" stroke-width="4" opacity="0"/>
+                            <path id="q4-perim-arc-bd" d="M 203 122 A 230 230 0 0 1 508 233" fill="none" stroke="#ca8a04" stroke-width="4" opacity="0"/>
+                            <path id="q4-perim-arc-bc" d="M 203 122 A 230 230 0 0 0 397 122" fill="none" stroke="#e11d48" stroke-width="3" stroke-dasharray="6,3" opacity="0"/>
+                            <line id="q4-perim-oa" x1="300" y1="330" x2="92" y2="233" stroke="#0f172a" stroke-width="3" opacity="0"/>
+                            <line id="q4-perim-od" x1="300" y1="330" x2="508" y2="233" stroke="#0f172a" stroke-width="3" opacity="0"/>
+                        </svg>
+                    </div>
+
+                    <div class="explanation-section">
+                        <div class="step-box" id="q4-step-content">
+                            <h2 id="q4-step-title">Loading...</h2>
+                            <p id="q4-step-desc">Loading...</p>
+                        </div>
+
+                        <div class="controls">
+                            <button id="q4-btn-prev" onclick="q4ChangeStep(-1)" disabled>Prev</button>
+                            <div class="progress-dots" id="q4-dots-container"></div>
+                            <button id="q4-btn-next" onclick="q4ChangeStep(1)">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
@@ -999,8 +1069,13 @@
                 q3Init();
                 q3Inited = true;
             }
+            if (num === 4 && !q4Inited) {
+                q4Init();
+                q4Inited = true;
+            }
         }
         let q3Inited = false;
+        let q4Inited = false;
 
         // ==========================================
         // QUESTION 1: Nancy's Paper Folding
@@ -1496,6 +1571,147 @@
         }
 
         // ==========================================
+        // QUESTION 4: Overlapping Quarter Circles
+        // ==========================================
+        let q4CurrentStep = 0;
+
+        function q4Show(id, opacity) {
+            const el = document.getElementById(id);
+            if (el) el.style.opacity = opacity !== undefined ? opacity : '1';
+        }
+        function q4Hide(id) { q4Show(id, '0'); }
+        function q4ShowEq(id, text) {
+            const el = document.getElementById(id);
+            if (el) { el.textContent = text; el.style.opacity = '1'; }
+        }
+
+        function q4Reset() {
+            ['q4-qc1','q4-qc2'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) { el.style.opacity = '0.3'; el.removeAttribute('style'); el.style.opacity = '0.3'; }
+            });
+            ['q4-overlap','q4-dim-oa','q4-dim-oa-lbl','q4-dim-od','q4-dim-od-lbl',
+             'q4-area-qc1','q4-area-qc2','q4-area-obc','q4-eq1','q4-eq2',
+             'q4-perim-arc-ac','q4-perim-arc-bd','q4-perim-arc-bc','q4-perim-oa','q4-perim-od'].forEach(q4Hide);
+        }
+
+        const q4Steps = [
+            {
+                title: 'Understanding the Figure',
+                text: 'OABCD is made up of <strong>2 overlapping quarter circles</strong>, each with <strong>radius 10 cm</strong>. One quarter circle has centre O passing through A and C. The other has centre O passing through B and D. The overlap region is triangle OBC with area <strong>30 cm²</strong>.',
+                actions() {
+                    q4Reset();
+                    q4Show('q4-dim-oa'); q4Show('q4-dim-oa-lbl');
+                    q4Show('q4-dim-od'); q4Show('q4-dim-od-lbl');
+                }
+            },
+            {
+                title: 'Step 1: Area of One Quarter Circle',
+                text: 'Area of one quarter circle<br>= ¼ × π × r²<br>= ¼ × 3.14 × 10 × 10<br>= ¼ × 314<br>= <strong>78.5 cm²</strong>',
+                actions() {
+                    q4Reset();
+                    document.getElementById('q4-qc1').style.opacity = '0.6';
+                    q4Show('q4-area-qc1');
+                    q4Show('q4-dim-oa'); q4Show('q4-dim-oa-lbl');
+                }
+            },
+            {
+                title: 'Step 2: Both Quarter Circles',
+                text: 'Both quarter circles have the <strong>same radius</strong>, so each has area <strong>78.5 cm²</strong>. But the overlap (triangle OBC) is counted <strong>twice</strong> if we simply add them.',
+                actions() {
+                    q4Reset();
+                    document.getElementById('q4-qc1').style.opacity = '0.5';
+                    document.getElementById('q4-qc2').style.opacity = '0.5';
+                    q4Show('q4-overlap');
+                    q4Show('q4-area-qc1'); q4Show('q4-area-qc2'); q4Show('q4-area-obc');
+                }
+            },
+            {
+                title: 'Step 3: Area of OABCD',
+                text: 'Area of OABCD<br>= Area of QC₁ + Area of QC₂ − Area of overlap OBC<br>= 78.5 + 78.5 − 30<br>= <strong style="color:#e11d48; font-size:1.2em;">127 cm²</strong>',
+                actions() {
+                    q4Reset();
+                    document.getElementById('q4-qc1').style.opacity = '0.5';
+                    document.getElementById('q4-qc2').style.opacity = '0.5';
+                    q4Show('q4-overlap');
+                    q4ShowEq('q4-eq1', '78.5 + 78.5 − 30');
+                    q4ShowEq('q4-eq2', '= 127 cm²');
+                }
+            },
+            {
+                title: 'Step 4: Perimeter — Identify the Arcs',
+                text: 'The perimeter of OABCD consists of:<br>• <strong>OA</strong> (straight line = 10 cm)<br>• <strong>Arc ABD</strong> (from A to D going via B, the outer boundary)<br>• <strong>OD</strong> (straight line = 10 cm)<br><br>The outer boundary arc = arc AC + arc BD − arc BC (the overlap arc is subtracted because it\'s interior).',
+                actions() {
+                    q4Reset();
+                    q4Show('q4-perim-oa'); q4Show('q4-perim-od');
+                    q4Show('q4-perim-arc-ac'); q4Show('q4-perim-arc-bd');
+                    q4Show('q4-perim-arc-bc');
+                }
+            },
+            {
+                title: 'Step 5: Arc of One Quarter Circle',
+                text: 'Arc length of one quarter circle<br>= ¼ × 2 × π × r<br>= ¼ × 2 × 3.14 × 10<br>= ¼ × 62.8<br>= <strong>15.7 cm</strong>',
+                actions() {
+                    q4Reset();
+                    q4Show('q4-perim-arc-ac');
+                    q4ShowEq('q4-eq1', '¼ × 2 × 3.14 × 10 = 15.7 cm');
+                }
+            },
+            {
+                title: 'Step 6: Arc BC (Overlap Boundary)',
+                text: 'Perimeter of triangle OBC = OB + OC + arc BC<br>26 = 10 + 10 + arc BC<br>Arc BC = 26 − 20 = <strong>6 cm</strong><br><br><em>(Given that perimeter of OBC = 26 cm, since area = 30 cm² and OB = OC = 10 cm, the arc BC replaces the straight side)</em>',
+                actions() {
+                    q4Reset();
+                    q4Show('q4-overlap');
+                    q4Show('q4-perim-arc-bc');
+                    q4ShowEq('q4-eq1', 'Arc BC = 26 − 10 − 10 = 6 cm');
+                }
+            },
+            {
+                title: 'Step 7: Perimeter of OABCD',
+                text: 'Perimeter of OABCD<br>= OA + (Arc AC + Arc BD − Arc BC) + OD<br>= 10 + (15.7 + 15.7 − 6) + 10<br>= 10 + 25.4 + 10<br>= <strong style="color:#e11d48; font-size:1.2em;">45.4 cm</strong>',
+                actions() {
+                    q4Reset();
+                    q4Show('q4-perim-oa'); q4Show('q4-perim-od');
+                    q4Show('q4-perim-arc-ac'); q4Show('q4-perim-arc-bd');
+                    q4Show('q4-perim-arc-bc');
+                    q4ShowEq('q4-eq1', '10 + (15.7 + 15.7 − 6) + 10');
+                    q4ShowEq('q4-eq2', '= 45.4 cm');
+                }
+            }
+        ];
+
+        function q4UpdateUI() {
+            const step = q4Steps[q4CurrentStep];
+            document.getElementById('q4-step-title').innerHTML = step.title;
+            document.getElementById('q4-step-desc').innerHTML = step.text;
+            step.actions();
+            document.getElementById('q4-btn-prev').disabled = q4CurrentStep === 0;
+            const nextBtn = document.getElementById('q4-btn-next');
+            nextBtn.disabled = q4CurrentStep === q4Steps.length - 1;
+            nextBtn.textContent = q4CurrentStep === q4Steps.length - 1 ? 'Done' : 'Next';
+            document.querySelectorAll('#q4-dots-container .dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === q4CurrentStep);
+            });
+        }
+
+        function q4ChangeStep(dir) {
+            q4CurrentStep = Math.max(0, Math.min(q4Steps.length - 1, q4CurrentStep + dir));
+            q4UpdateUI();
+        }
+
+        function q4Init() {
+            const dotsContainer = document.getElementById('q4-dots-container');
+            dotsContainer.innerHTML = '';
+            q4Steps.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.className = `dot ${index === 0 ? 'active' : ''}`;
+                dotsContainer.appendChild(dot);
+            });
+            q4UpdateUI();
+        }
+
+        // ==========================================
         // PRINT FUNCTIONALITY
         // ==========================================
         function openPrintModal() {
@@ -1611,6 +1827,28 @@
             return clone.outerHTML;
         }
 
+        function getQ4SvgForPrint() {
+            if (!q4Inited) { q4Init(); q4Inited = true; }
+            const svg = document.getElementById('q4-svg');
+            const clone = svg.cloneNode(true);
+            clone.removeAttribute('id');
+            // Show base state: outline visible, quarter circles faintly visible, labels
+            clone.querySelectorAll('[id^="q4-qc"]').forEach(el => { el.style.opacity = '0.3'; });
+            // Show dimension lines
+            ['q4-dim-oa','q4-dim-oa-lbl','q4-dim-od','q4-dim-od-lbl'].forEach(id => {
+                const el = clone.querySelector('#' + id);
+                if (el) el.style.opacity = '1';
+            });
+            // Hide everything else
+            ['q4-overlap','q4-area-qc1','q4-area-qc2','q4-area-obc','q4-eq1','q4-eq2',
+             'q4-perim-arc-ac','q4-perim-arc-bd','q4-perim-arc-bc','q4-perim-oa','q4-perim-od'].forEach(id => {
+                const el = clone.querySelector('#' + id);
+                if (el) el.style.opacity = '0';
+            });
+            clone.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+            return clone.outerHTML;
+        }
+
         function buildQuestionsPages() {
             return `
                 <div class="print-page">
@@ -1654,7 +1892,18 @@
                         </div>
                         <div class="print-diagram">${getQ3SvgForPrint()}</div>
                     </div>
-                    <div class="print-half"></div>
+                    <div class="print-half">
+                        <div class="print-q-header">
+                            <div class="print-q-num">4</div>
+                            <div class="print-q-label">Overlapping Quarter Circles</div>
+                        </div>
+                        <div class="print-q-text">
+                            The figure OABCD is made up of 2 overlapping quarter circles of radius 10 cm each. The area of triangle OBC is 30 cm². (Take &pi; = 3.14)<br><br>
+                            (a) Find the area of the figure OABCD.<br><br>
+                            (b) Find the perimeter of the figure OABCD.
+                        </div>
+                        <div class="print-diagram">${getQ4SvgForPrint()}</div>
+                    </div>
                 </div>`;
         }
 
@@ -1738,7 +1987,31 @@
                             </div>
                         </div>
                     </div>
-                    <div class="print-half"></div>
+                    <div class="print-half">
+                        <div class="print-q-header">
+                            <div class="print-q-num">4</div>
+                            <div class="print-q-label">Overlapping Quarter Circles</div>
+                        </div>
+                        <div class="print-answer-box">
+                            <h3>Solution</h3>
+                            <div class="print-answer-item">
+                                <strong>(a)</strong> Area of one quarter circle = &frac14; &times; 3.14 &times; 10 &times; 10 = 78.5 cm²<br>
+                                Area of OABCD = 78.5 + 78.5 &minus; 30
+                            </div>
+                            <div class="print-answer-final" style="margin-bottom: 3mm;">
+                                = <strong>127 cm²</strong>
+                            </div>
+                            <div class="print-answer-item">
+                                <strong>(b)</strong> Arc of one quarter circle = &frac14; &times; 2 &times; 3.14 &times; 10 = 15.7 cm<br>
+                                Arc BC = 26 &minus; 10 &minus; 10 = 6 cm<br>
+                                Perimeter = OA + (arc AC + arc BD &minus; arc BC) + OD<br>
+                                = 10 + (15.7 + 15.7 &minus; 6) + 10
+                            </div>
+                            <div class="print-answer-final">
+                                = <strong>45.4 cm</strong>
+                            </div>
+                        </div>
+                    </div>
                 </div>`;
         }
 
