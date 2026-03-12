@@ -709,6 +709,10 @@
                 <span class="q-num">4</span>
                 <span>Overlapping Quarter Circles</span>
             </button>
+            <button class="q-btn" onclick="switchQuestion(5)">
+                <span class="q-num">5</span>
+                <span>Isabelle's Spending</span>
+            </button>
         </div>
         <div class="sidebar-actions">
             <button class="print-btn" onclick="openPrintModal()">
@@ -1049,6 +1053,78 @@
             </div>
         </div>
 
+        <!-- ===== QUESTION 5: Isabelle's Spending ===== -->
+        <div id="q5-container" class="question-container">
+            <div class="app-container">
+                <div class="question-bar">
+                    The pie chart shows how Isabelle spent her money. The amount of money Isabelle spent on transport is 2/5 of the amount she spent on food.<br>
+                    (a) What is the percentage of Isabelle's money spent on food?<br>
+                    The amount of money Isabelle saved is 25% of the amount she spent on transport.<br>
+                    (b) Isabelle saved $90. How much money did she spent in total?
+                </div>
+
+                <div class="content">
+                    <div class="diagram-section">
+                        <svg viewBox="0 0 600 420" id="q5-svg">
+                            <!-- Pie chart sectors -->
+                            <!-- Clothes: 10% = 36°, from 0° to 36° (clockwise from top) -->
+                            <path id="q5-clothes" d="M 300 200 L 300 50 A 150 150 0 0 1 388 79 Z" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+                            <!-- Transport: 24% = 86.4°, from 36° to 122.4° -->
+                            <path id="q5-transport" d="M 300 200 L 388 79 A 150 150 0 0 1 427 280 Z" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+                            <!-- Savings: 6% = 21.6°, from 122.4° to 144° -->
+                            <path id="q5-savings" d="M 300 200 L 427 280 A 150 150 0 0 1 388 321 Z" fill="#fef9c3" stroke="#ca8a04" stroke-width="2"/>
+                            <!-- Food: 60% = 216°, from 144° to 360° (large arc) -->
+                            <path id="q5-food" d="M 300 200 L 388 321 A 150 150 0 1 1 300 50 Z" fill="#d1fae5" stroke="#065f46" stroke-width="2"/>
+
+                            <!-- Sector outline circle -->
+                            <circle cx="300" cy="200" r="150" fill="none" stroke="#0f172a" stroke-width="2"/>
+
+                            <!-- Sector divider lines -->
+                            <line x1="300" y1="200" x2="300" y2="50" stroke="#0f172a" stroke-width="1.5"/>
+                            <line x1="300" y1="200" x2="388" y2="79" stroke="#0f172a" stroke-width="1.5"/>
+                            <line x1="300" y1="200" x2="427" y2="280" stroke="#0f172a" stroke-width="1.5"/>
+                            <line x1="300" y1="200" x2="388" y2="321" stroke="#0f172a" stroke-width="1.5"/>
+
+                            <!-- Labels -->
+                            <text id="q5-lbl-clothes" x="332" y="100" text-anchor="middle" font-size="14" font-weight="bold" fill="#7c3aed" font-family="Century Gothic, sans-serif">Clothes</text>
+                            <text id="q5-lbl-transport" x="408" y="172" text-anchor="middle" font-size="14" font-weight="bold" fill="#3b82f6" font-family="Century Gothic, sans-serif">Transport</text>
+                            <text id="q5-lbl-transport-pct" x="408" y="192" text-anchor="middle" font-size="14" font-weight="bold" fill="#3b82f6" font-family="Century Gothic, sans-serif">24%</text>
+                            <text id="q5-lbl-savings" x="418" y="305" text-anchor="middle" font-size="13" font-weight="bold" fill="#ca8a04" font-family="Century Gothic, sans-serif">Savings</text>
+                            <text id="q5-lbl-food" x="210" y="240" text-anchor="middle" font-size="16" font-weight="bold" fill="#065f46" font-family="Century Gothic, sans-serif">Food</text>
+
+                            <!-- Percentage labels (shown per step) -->
+                            <text id="q5-pct-food" x="210" y="262" text-anchor="middle" font-size="15" font-weight="bold" fill="#065f46" font-family="Century Gothic, sans-serif" opacity="0">60%</text>
+                            <text id="q5-pct-savings" x="418" y="323" text-anchor="middle" font-size="13" font-weight="bold" fill="#ca8a04" font-family="Century Gothic, sans-serif" opacity="0">6%</text>
+                            <text id="q5-pct-clothes" x="332" y="118" text-anchor="middle" font-size="13" font-weight="bold" fill="#7c3aed" font-family="Century Gothic, sans-serif" opacity="0">10%</text>
+
+                            <!-- Equation area -->
+                            <text id="q5-eq1" x="300" y="385" text-anchor="middle" font-size="15" fill="#0f172a" font-family="Century Gothic, sans-serif" font-weight="bold" opacity="0"></text>
+                            <text id="q5-eq2" x="300" y="408" text-anchor="middle" font-size="16" fill="#e11d48" font-family="Century Gothic, sans-serif" font-weight="bold" opacity="0"></text>
+
+                            <!-- Highlight ring for a sector (shown per step) -->
+                            <path id="q5-hi-food" d="M 300 200 L 388 321 A 150 150 0 1 1 300 50 Z" fill="none" stroke="#e11d48" stroke-width="3.5" opacity="0"/>
+                            <path id="q5-hi-transport" d="M 300 200 L 388 79 A 150 150 0 0 1 427 280 Z" fill="none" stroke="#e11d48" stroke-width="3.5" opacity="0"/>
+                            <path id="q5-hi-savings" d="M 300 200 L 427 280 A 150 150 0 0 1 388 321 Z" fill="none" stroke="#e11d48" stroke-width="3.5" opacity="0"/>
+                            <path id="q5-hi-clothes" d="M 300 200 L 300 50 A 150 150 0 0 1 388 79 Z" fill="none" stroke="#e11d48" stroke-width="3.5" opacity="0"/>
+                        </svg>
+                    </div>
+
+                    <div class="explanation-section">
+                        <div class="step-box" id="q5-step-content">
+                            <h2 id="q5-step-title">Loading...</h2>
+                            <p id="q5-step-desc">Loading...</p>
+                        </div>
+
+                        <div class="controls">
+                            <button id="q5-btn-prev" onclick="q5ChangeStep(-1)" disabled>Prev</button>
+                            <div class="progress-dots" id="q5-dots-container"></div>
+                            <button id="q5-btn-next" onclick="q5ChangeStep(1)">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
@@ -1073,9 +1149,14 @@
                 q4Init();
                 q4Inited = true;
             }
+            if (num === 5 && !q5Inited) {
+                q5Init();
+                q5Inited = true;
+            }
         }
         let q3Inited = false;
         let q4Inited = false;
+        let q5Inited = false;
 
         // ==========================================
         // QUESTION 1: Nancy's Paper Folding
@@ -1712,6 +1793,142 @@
         }
 
         // ==========================================
+        // QUESTION 5: Isabelle's Spending (Pie Chart)
+        // ==========================================
+        let q5CurrentStep = 0;
+
+        function q5Show(id, opacity) {
+            const el = document.getElementById(id);
+            if (el) el.style.opacity = opacity !== undefined ? opacity : '1';
+        }
+        function q5Hide(id) { q5Show(id, '0'); }
+        function q5ShowEq(id, text) {
+            const el = document.getElementById(id);
+            if (el) { el.textContent = text; el.style.opacity = '1'; }
+        }
+
+        function q5Reset() {
+            ['q5-pct-food','q5-pct-savings','q5-pct-clothes','q5-eq1','q5-eq2',
+             'q5-hi-food','q5-hi-transport','q5-hi-savings','q5-hi-clothes'].forEach(q5Hide);
+            // Reset sector fills to defaults
+            const fills = { 'q5-food': '#d1fae5', 'q5-transport': '#dbeafe', 'q5-savings': '#fef9c3', 'q5-clothes': '#ede9fe' };
+            Object.entries(fills).forEach(([id, fill]) => {
+                const el = document.getElementById(id);
+                if (el) el.setAttribute('fill', fill);
+            });
+        }
+
+        const q5Steps = [
+            {
+                title: 'Understanding the Pie Chart',
+                text: 'The pie chart shows how Isabelle spent her money across 4 categories: <strong>Food</strong>, <strong>Transport (24%)</strong>, <strong>Clothes</strong>, and <strong>Savings</strong>.<br><br>We know:<br>• Transport = <strong>2/5</strong> of Food<br>• Savings = <strong>25%</strong> of Transport',
+                actions() {
+                    q5Reset();
+                }
+            },
+            {
+                title: 'Step 1: Find the Percentage for Food',
+                text: 'Transport = 2/5 × Food<br><br>24% = 2/5 × Food<br><br>Food = 24% × 5/2<br>Food = 24% × 2.5<br>= <strong style="color:#e11d48; font-size:1.1em;">60%</strong>',
+                actions() {
+                    q5Reset();
+                    q5Show('q5-hi-food');
+                    q5Show('q5-hi-transport');
+                    q5Show('q5-pct-food');
+                    q5ShowEq('q5-eq1', '24% = 2/5 × Food → Food = 60%');
+                }
+            },
+            {
+                title: 'Answer (a)',
+                text: 'The percentage of Isabelle\'s money spent on food is <strong style="color:#e11d48; font-size:1.2em;">60%</strong>.',
+                actions() {
+                    q5Reset();
+                    q5Show('q5-hi-food');
+                    q5Show('q5-pct-food');
+                    q5ShowEq('q5-eq2', 'Answer: 60%');
+                }
+            },
+            {
+                title: 'Step 2: Find the Percentage for Savings',
+                text: 'Savings = 25% of Transport<br>= 25% × 24%<br>= <strong>6%</strong>',
+                actions() {
+                    q5Reset();
+                    q5Show('q5-pct-food');
+                    q5Show('q5-hi-savings');
+                    q5Show('q5-hi-transport');
+                    q5Show('q5-pct-savings');
+                    q5ShowEq('q5-eq1', 'Savings = 25% × 24% = 6%');
+                }
+            },
+            {
+                title: 'Step 3: Find the Percentage for Clothes',
+                text: 'All categories add up to 100%:<br><br>Clothes = 100% − Food − Transport − Savings<br>= 100% − 60% − 24% − 6%<br>= <strong>10%</strong>',
+                actions() {
+                    q5Reset();
+                    q5Show('q5-pct-food');
+                    q5Show('q5-pct-savings');
+                    q5Show('q5-pct-clothes');
+                    q5Show('q5-hi-clothes');
+                    q5ShowEq('q5-eq1', '100% − 60% − 24% − 6% = 10%');
+                }
+            },
+            {
+                title: 'Step 4: Find Total Money from Savings',
+                text: 'Isabelle saved <strong>$90</strong>, and savings = <strong>6%</strong> of total.<br><br>6% = $90<br>1% = $90 ÷ 6 = $15<br>100% = $15 × 100 = <strong>$1500</strong>',
+                actions() {
+                    q5Reset();
+                    q5Show('q5-pct-food');
+                    q5Show('q5-pct-savings');
+                    q5Show('q5-pct-clothes');
+                    q5Show('q5-hi-savings');
+                    q5ShowEq('q5-eq1', '6% = $90 → 1% = $15');
+                    q5ShowEq('q5-eq2', '100% = $1500');
+                }
+            },
+            {
+                title: 'Step 5: Total Amount Spent',
+                text: 'Total money Isabelle had = <strong>$1500</strong><br><br>Amount spent = Total − Savings<br>= $1500 − $90<br>= <strong style="color:#e11d48; font-size:1.2em;">$1410</strong>',
+                actions() {
+                    q5Reset();
+                    q5Show('q5-pct-food');
+                    q5Show('q5-pct-savings');
+                    q5Show('q5-pct-clothes');
+                    q5ShowEq('q5-eq1', '$1500 − $90');
+                    q5ShowEq('q5-eq2', '= $1410');
+                }
+            }
+        ];
+
+        function q5UpdateUI() {
+            const step = q5Steps[q5CurrentStep];
+            document.getElementById('q5-step-title').innerHTML = step.title;
+            document.getElementById('q5-step-desc').innerHTML = step.text;
+            step.actions();
+            document.getElementById('q5-btn-prev').disabled = q5CurrentStep === 0;
+            const nextBtn = document.getElementById('q5-btn-next');
+            nextBtn.disabled = q5CurrentStep === q5Steps.length - 1;
+            nextBtn.textContent = q5CurrentStep === q5Steps.length - 1 ? 'Done' : 'Next';
+            document.querySelectorAll('#q5-dots-container .dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === q5CurrentStep);
+            });
+        }
+
+        function q5ChangeStep(dir) {
+            q5CurrentStep = Math.max(0, Math.min(q5Steps.length - 1, q5CurrentStep + dir));
+            q5UpdateUI();
+        }
+
+        function q5Init() {
+            const dotsContainer = document.getElementById('q5-dots-container');
+            dotsContainer.innerHTML = '';
+            q5Steps.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.className = `dot ${index === 0 ? 'active' : ''}`;
+                dotsContainer.appendChild(dot);
+            });
+            q5UpdateUI();
+        }
+
+        // ==========================================
         // PRINT FUNCTIONALITY
         // ==========================================
         function openPrintModal() {
@@ -1849,6 +2066,21 @@
             return clone.outerHTML;
         }
 
+        function getQ5SvgForPrint() {
+            if (!q5Inited) { q5Init(); q5Inited = true; }
+            const svg = document.getElementById('q5-svg');
+            const clone = svg.cloneNode(true);
+            clone.removeAttribute('id');
+            // Show base pie chart, hide percentages, equations, highlights
+            ['q5-pct-food','q5-pct-savings','q5-pct-clothes','q5-eq1','q5-eq2',
+             'q5-hi-food','q5-hi-transport','q5-hi-savings','q5-hi-clothes'].forEach(id => {
+                const el = clone.querySelector('#' + id);
+                if (el) el.style.opacity = '0';
+            });
+            clone.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+            return clone.outerHTML;
+        }
+
         function buildQuestionsPages() {
             return `
                 <div class="print-page">
@@ -1904,6 +2136,24 @@
                         </div>
                         <div class="print-diagram">${getQ4SvgForPrint()}</div>
                     </div>
+                </div>
+                <div class="print-page">
+                    <div class="print-page-title">Maths Worksheet (cont.)</div>
+                    <div class="print-half">
+                        <div class="print-q-header">
+                            <div class="print-q-num">5</div>
+                            <div class="print-q-label">Isabelle's Spending</div>
+                        </div>
+                        <div class="print-q-text">
+                            The pie chart shows how Isabelle spent her money.<br><br>
+                            The amount of money Isabelle spent on transport is 2/5 of the amount she spent on food.<br>
+                            (a) What is the percentage of Isabelle's money spent on food? [1]<br><br>
+                            The amount of money Isabelle saved is 25% of the amount she spent on transport.<br>
+                            (b) Isabelle saved $90. How much money did she spent in total?
+                        </div>
+                        <div class="print-diagram">${getQ5SvgForPrint()}</div>
+                    </div>
+                    <div class="print-half"></div>
                 </div>`;
         }
 
@@ -2012,6 +2262,38 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="print-page">
+                    <div class="print-page-title">Answer Key (cont.)</div>
+                    <div class="print-half">
+                        <div class="print-q-header">
+                            <div class="print-q-num">5</div>
+                            <div class="print-q-label">Isabelle's Spending</div>
+                        </div>
+                        <div class="print-answer-box">
+                            <h3>Solution</h3>
+                            <div class="print-answer-item">
+                                <strong>(a)</strong> Transport = 2/5 &times; Food<br>
+                                24% = 2/5 &times; Food<br>
+                                Food = 24% &times; 5/2 = <strong>60%</strong>
+                            </div>
+                            <div class="print-answer-final" style="margin-bottom: 3mm;">
+                                Answer (a): <strong>60%</strong>
+                            </div>
+                            <div class="print-answer-item">
+                                <strong>(b)</strong> Savings = 25% &times; 24% = 6%<br>
+                                Clothes = 100% &minus; 60% &minus; 24% &minus; 6% = 10%<br><br>
+                                6% = $90<br>
+                                1% = $90 &divide; 6 = $15<br>
+                                100% = $15 &times; 100 = $1500<br>
+                                Total spent = $1500 &minus; $90
+                            </div>
+                            <div class="print-answer-final">
+                                = <strong>$1410</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="print-half"></div>
                 </div>`;
         }
 
