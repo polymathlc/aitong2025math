@@ -713,6 +713,10 @@
                 <span class="q-num">5</span>
                 <span>Isabelle's Spending</span>
             </button>
+            <button class="q-btn" onclick="switchQuestion(6)">
+                <span class="q-num">6</span>
+                <span>T-Shirt Sale</span>
+            </button>
         </div>
         <div class="sidebar-actions">
             <button class="print-btn" onclick="openPrintModal()">
@@ -1125,6 +1129,129 @@
             </div>
         </div>
 
+        <!-- ===== QUESTION 6: T-Shirt Sale ===== -->
+        <div id="q6-container" class="question-container">
+            <div class="app-container">
+                <div class="question-bar">
+                    A shop offered 120 T-shirts at a 20% discount during a 7-day sale. The line graph shows the number of T-shirts left unsold at the end of each day.<br>
+                    (a) On which day was the most number of T-shirts sold?<br>
+                    (b) What percentage of 120 T-shirts were sold in the first 5 days of the sale? Correct your answer to the nearest percent.<br>
+                    (c) The shop collected $192 on Day 3 of the sale. What was the price of each T-shirts before the discount?
+                </div>
+
+                <div class="content">
+                    <div class="diagram-section">
+                        <svg viewBox="0 0 620 430" id="q6-svg">
+                            <!-- Y-axis title -->
+                            <text x="15" y="200" text-anchor="middle" font-size="12" fill="#334155" font-family="Century Gothic, sans-serif" transform="rotate(-90, 15, 200)">Number of T-shirts left unsold</text>
+
+                            <!-- Horizontal grid lines and y-axis labels -->
+                            <line x1="90" y1="350" x2="575" y2="350" stroke="#cbd5e1" stroke-width="1"/>
+                            <text x="80" y="354" text-anchor="end" font-size="13" fill="#334155" font-family="Century Gothic, sans-serif">0</text>
+                            <line x1="90" y1="297" x2="575" y2="297" stroke="#cbd5e1" stroke-width="1"/>
+                            <text x="80" y="301" text-anchor="end" font-size="13" fill="#334155" font-family="Century Gothic, sans-serif">20</text>
+                            <line x1="90" y1="243" x2="575" y2="243" stroke="#cbd5e1" stroke-width="1"/>
+                            <text x="80" y="247" text-anchor="end" font-size="13" fill="#334155" font-family="Century Gothic, sans-serif">40</text>
+                            <line x1="90" y1="190" x2="575" y2="190" stroke="#cbd5e1" stroke-width="1"/>
+                            <text x="80" y="194" text-anchor="end" font-size="13" fill="#334155" font-family="Century Gothic, sans-serif">60</text>
+                            <line x1="90" y1="137" x2="575" y2="137" stroke="#cbd5e1" stroke-width="1"/>
+                            <text x="80" y="141" text-anchor="end" font-size="13" fill="#334155" font-family="Century Gothic, sans-serif">80</text>
+                            <line x1="90" y1="83" x2="575" y2="83" stroke="#cbd5e1" stroke-width="1"/>
+                            <text x="80" y="87" text-anchor="end" font-size="13" fill="#334155" font-family="Century Gothic, sans-serif">100</text>
+                            <line x1="90" y1="30" x2="575" y2="30" stroke="#cbd5e1" stroke-width="1"/>
+                            <text x="80" y="34" text-anchor="end" font-size="13" fill="#334155" font-family="Century Gothic, sans-serif">120</text>
+
+                            <!-- Vertical grid lines -->
+                            <line x1="90" y1="30" x2="90" y2="350" stroke="#cbd5e1" stroke-width="1"/>
+                            <line x1="159" y1="30" x2="159" y2="350" stroke="#cbd5e1" stroke-width="1"/>
+                            <line x1="228" y1="30" x2="228" y2="350" stroke="#cbd5e1" stroke-width="1"/>
+                            <line x1="297" y1="30" x2="297" y2="350" stroke="#cbd5e1" stroke-width="1"/>
+                            <line x1="366" y1="30" x2="366" y2="350" stroke="#cbd5e1" stroke-width="1"/>
+                            <line x1="435" y1="30" x2="435" y2="350" stroke="#cbd5e1" stroke-width="1"/>
+                            <line x1="504" y1="30" x2="504" y2="350" stroke="#cbd5e1" stroke-width="1"/>
+                            <line x1="573" y1="30" x2="573" y2="350" stroke="#cbd5e1" stroke-width="1"/>
+
+                            <!-- Axes -->
+                            <line x1="90" y1="30" x2="90" y2="350" stroke="#0f172a" stroke-width="2"/>
+                            <line x1="90" y1="350" x2="575" y2="350" stroke="#0f172a" stroke-width="2"/>
+
+                            <!-- X-axis labels -->
+                            <text x="90" y="372" text-anchor="middle" font-size="11" fill="#334155" font-family="Century Gothic, sans-serif">Start of</text>
+                            <text x="90" y="385" text-anchor="middle" font-size="11" fill="#334155" font-family="Century Gothic, sans-serif">Sale</text>
+                            <text x="159" y="375" text-anchor="middle" font-size="12" fill="#334155" font-family="Century Gothic, sans-serif">Day 1</text>
+                            <text x="228" y="375" text-anchor="middle" font-size="12" fill="#334155" font-family="Century Gothic, sans-serif">Day 2</text>
+                            <text x="297" y="375" text-anchor="middle" font-size="12" fill="#334155" font-family="Century Gothic, sans-serif">Day 3</text>
+                            <text x="366" y="375" text-anchor="middle" font-size="12" fill="#334155" font-family="Century Gothic, sans-serif">Day 4</text>
+                            <text x="435" y="375" text-anchor="middle" font-size="12" fill="#334155" font-family="Century Gothic, sans-serif">Day 5</text>
+                            <text x="504" y="375" text-anchor="middle" font-size="12" fill="#334155" font-family="Century Gothic, sans-serif">Day 6</text>
+                            <text x="573" y="375" text-anchor="middle" font-size="12" fill="#334155" font-family="Century Gothic, sans-serif">Day 7</text>
+
+                            <!-- Highlight segments (hidden, shown per step) -->
+                            <line id="q6-seg-d1" x1="90" y1="30" x2="159" y2="97" stroke="#e11d48" stroke-width="4" opacity="0"/>
+                            <line id="q6-seg-d2" x1="159" y1="97" x2="228" y2="137" stroke="#e11d48" stroke-width="4" opacity="0"/>
+                            <line id="q6-seg-d3" x1="228" y1="137" x2="297" y2="190" stroke="#e11d48" stroke-width="4" opacity="0"/>
+                            <line id="q6-seg-d4" x1="297" y1="190" x2="366" y2="230" stroke="#e11d48" stroke-width="4" opacity="0"/>
+                            <line id="q6-seg-d5" x1="366" y1="230" x2="435" y2="257" stroke="#e11d48" stroke-width="4" opacity="0"/>
+                            <line id="q6-seg-d6" x1="435" y1="257" x2="504" y2="297" stroke="#e11d48" stroke-width="4" opacity="0"/>
+                            <line id="q6-seg-d7" x1="504" y1="297" x2="573" y2="337" stroke="#e11d48" stroke-width="4" opacity="0"/>
+
+                            <!-- Shaded area for first 5 days (hidden) -->
+                            <polygon id="q6-area-5days" points="90,30 159,97 228,137 297,190 366,230 435,257 435,350 90,350" fill="#dbeafe" stroke="none" opacity="0"/>
+
+                            <!-- Data line -->
+                            <polyline points="90,30 159,97 228,137 297,190 366,230 435,257 504,297 573,337" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linejoin="round"/>
+
+                            <!-- Data point dots -->
+                            <circle cx="90" cy="30" r="5" fill="#0f172a"/>
+                            <circle cx="159" cy="97" r="5" fill="#0f172a"/>
+                            <circle cx="228" cy="137" r="5" fill="#0f172a"/>
+                            <circle cx="297" cy="190" r="5" fill="#0f172a"/>
+                            <circle cx="366" cy="230" r="5" fill="#0f172a"/>
+                            <circle cx="435" cy="257" r="5" fill="#0f172a"/>
+                            <circle cx="504" cy="297" r="5" fill="#0f172a"/>
+                            <circle cx="573" cy="337" r="5" fill="#0f172a"/>
+
+                            <!-- Value labels above dots (hidden) -->
+                            <text id="q6-val-0" x="90" y="22" text-anchor="middle" font-size="12" font-weight="bold" fill="#4f46e5" font-family="Century Gothic, sans-serif" opacity="0">120</text>
+                            <text id="q6-val-1" x="159" y="89" text-anchor="middle" font-size="12" font-weight="bold" fill="#4f46e5" font-family="Century Gothic, sans-serif" opacity="0">95</text>
+                            <text id="q6-val-2" x="228" y="129" text-anchor="middle" font-size="12" font-weight="bold" fill="#4f46e5" font-family="Century Gothic, sans-serif" opacity="0">80</text>
+                            <text id="q6-val-3" x="297" y="182" text-anchor="middle" font-size="12" font-weight="bold" fill="#4f46e5" font-family="Century Gothic, sans-serif" opacity="0">60</text>
+                            <text id="q6-val-4" x="366" y="222" text-anchor="middle" font-size="12" font-weight="bold" fill="#4f46e5" font-family="Century Gothic, sans-serif" opacity="0">45</text>
+                            <text id="q6-val-5" x="435" y="249" text-anchor="middle" font-size="12" font-weight="bold" fill="#4f46e5" font-family="Century Gothic, sans-serif" opacity="0">35</text>
+                            <text id="q6-val-6" x="504" y="289" text-anchor="middle" font-size="12" font-weight="bold" fill="#4f46e5" font-family="Century Gothic, sans-serif" opacity="0">20</text>
+                            <text id="q6-val-7" x="573" y="329" text-anchor="middle" font-size="12" font-weight="bold" fill="#4f46e5" font-family="Century Gothic, sans-serif" opacity="0">5</text>
+
+                            <!-- "Sold" labels between days (hidden) -->
+                            <text id="q6-sold-1" x="124" y="72" text-anchor="middle" font-size="11" font-weight="bold" fill="#e11d48" font-family="Century Gothic, sans-serif" opacity="0">−25</text>
+                            <text id="q6-sold-2" x="193" y="124" text-anchor="middle" font-size="11" font-weight="bold" fill="#e11d48" font-family="Century Gothic, sans-serif" opacity="0">−15</text>
+                            <text id="q6-sold-3" x="262" y="170" text-anchor="middle" font-size="11" font-weight="bold" fill="#e11d48" font-family="Century Gothic, sans-serif" opacity="0">−20</text>
+                            <text id="q6-sold-4" x="331" y="218" text-anchor="middle" font-size="11" font-weight="bold" fill="#e11d48" font-family="Century Gothic, sans-serif" opacity="0">−15</text>
+                            <text id="q6-sold-5" x="400" y="251" text-anchor="middle" font-size="11" font-weight="bold" fill="#e11d48" font-family="Century Gothic, sans-serif" opacity="0">−10</text>
+                            <text id="q6-sold-6" x="469" y="284" text-anchor="middle" font-size="11" font-weight="bold" fill="#e11d48" font-family="Century Gothic, sans-serif" opacity="0">−15</text>
+                            <text id="q6-sold-7" x="538" y="324" text-anchor="middle" font-size="11" font-weight="bold" fill="#e11d48" font-family="Century Gothic, sans-serif" opacity="0">−15</text>
+
+                            <!-- Equation area -->
+                            <text id="q6-eq1" x="330" y="400" text-anchor="middle" font-size="14" fill="#0f172a" font-family="Century Gothic, sans-serif" font-weight="bold" opacity="0"></text>
+                            <text id="q6-eq2" x="330" y="420" text-anchor="middle" font-size="15" fill="#e11d48" font-family="Century Gothic, sans-serif" font-weight="bold" opacity="0"></text>
+                        </svg>
+                    </div>
+
+                    <div class="explanation-section">
+                        <div class="step-box" id="q6-step-content">
+                            <h2 id="q6-step-title">Loading...</h2>
+                            <p id="q6-step-desc">Loading...</p>
+                        </div>
+
+                        <div class="controls">
+                            <button id="q6-btn-prev" onclick="q6ChangeStep(-1)" disabled>Prev</button>
+                            <div class="progress-dots" id="q6-dots-container"></div>
+                            <button id="q6-btn-next" onclick="q6ChangeStep(1)">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
@@ -1153,10 +1280,15 @@
                 q5Init();
                 q5Inited = true;
             }
+            if (num === 6 && !q6Inited) {
+                q6Init();
+                q6Inited = true;
+            }
         }
         let q3Inited = false;
         let q4Inited = false;
         let q5Inited = false;
+        let q6Inited = false;
 
         // ==========================================
         // QUESTION 1: Nancy's Paper Folding
@@ -1949,6 +2081,142 @@
         }
 
         // ==========================================
+        // QUESTION 6: T-Shirt Sale (Line Graph)
+        // ==========================================
+        let q6CurrentStep = 0;
+
+        function q6Show(id, opacity) {
+            const el = document.getElementById(id);
+            if (el) el.style.opacity = opacity !== undefined ? opacity : '1';
+        }
+        function q6Hide(id) { q6Show(id, '0'); }
+        function q6ShowEq(id, text) {
+            const el = document.getElementById(id);
+            if (el) { el.textContent = text; el.style.opacity = '1'; }
+        }
+
+        function q6Reset() {
+            for (let i = 0; i <= 7; i++) q6Hide('q6-val-' + i);
+            for (let i = 1; i <= 7; i++) { q6Hide('q6-sold-' + i); q6Hide('q6-seg-d' + i); }
+            q6Hide('q6-area-5days');
+            q6Hide('q6-eq1'); q6Hide('q6-eq2');
+        }
+
+        const q6Steps = [
+            {
+                title: 'Reading the Line Graph',
+                text: 'The graph shows T-shirts <strong>left unsold</strong> at the end of each day:<br><br>Start: 120 &rarr; Day 1: 95 &rarr; Day 2: 80 &rarr; Day 3: 60<br>Day 4: 45 &rarr; Day 5: 35 &rarr; Day 6: 20 &rarr; Day 7: 5',
+                actions() {
+                    q6Reset();
+                    for (let i = 0; i <= 7; i++) q6Show('q6-val-' + i);
+                }
+            },
+            {
+                title: 'Step 1: T-Shirts Sold Each Day',
+                text: 'To find how many were <strong>sold</strong> each day, subtract consecutive values:<br><br>Day 1: 120 − 95 = <strong style="color:#e11d48">25</strong><br>Day 2: 95 − 80 = 15<br>Day 3: 80 − 60 = 20<br>Day 4: 60 − 45 = 15<br>Day 5: 45 − 35 = 10<br>Day 6: 35 − 20 = 15<br>Day 7: 20 − 5 = 15',
+                actions() {
+                    q6Reset();
+                    for (let i = 0; i <= 7; i++) q6Show('q6-val-' + i);
+                    for (let i = 1; i <= 7; i++) q6Show('q6-sold-' + i);
+                    q6Show('q6-seg-d1');
+                }
+            },
+            {
+                title: 'Answer (a)',
+                text: 'Day 1 had the <strong>steepest drop</strong> (25 shirts sold), which is the most of any day.<br><br>Answer: <strong style="color:#e11d48; font-size:1.2em;">Day 1</strong>',
+                actions() {
+                    q6Reset();
+                    for (let i = 0; i <= 7; i++) q6Show('q6-val-' + i);
+                    q6Show('q6-sold-1');
+                    q6Show('q6-seg-d1');
+                    q6ShowEq('q6-eq2', 'Day 1: 25 shirts sold (most)');
+                }
+            },
+            {
+                title: 'Step 2: First 5 Days Total Sold',
+                text: 'T-shirts left after Day 5 = <strong>35</strong><br><br>Sold in first 5 days = 120 − 35 = <strong>85</strong>',
+                actions() {
+                    q6Reset();
+                    q6Show('q6-val-0'); q6Show('q6-val-5');
+                    q6Show('q6-area-5days');
+                    q6ShowEq('q6-eq1', 'Sold in 5 days = 120 − 35 = 85');
+                }
+            },
+            {
+                title: 'Step 3: Percentage Sold in First 5 Days',
+                text: 'Percentage = 85 ÷ 120 × 100<br>= 70.833...%<br>≈ <strong style="color:#e11d48; font-size:1.2em;">71%</strong> (nearest percent)',
+                actions() {
+                    q6Reset();
+                    q6Show('q6-area-5days');
+                    q6ShowEq('q6-eq1', '85 ÷ 120 × 100 = 70.833...%');
+                    q6ShowEq('q6-eq2', '≈ 71%');
+                }
+            },
+            {
+                title: 'Step 4: T-Shirts Sold on Day 3',
+                text: 'From the graph:<br>End of Day 2: 80 &nbsp;|&nbsp; End of Day 3: 60<br><br>Sold on Day 3 = 80 − 60 = <strong>20 shirts</strong>',
+                actions() {
+                    q6Reset();
+                    q6Show('q6-val-2'); q6Show('q6-val-3');
+                    q6Show('q6-seg-d3');
+                    q6Show('q6-sold-3');
+                    q6ShowEq('q6-eq1', 'Day 3 sold: 80 − 60 = 20 shirts');
+                }
+            },
+            {
+                title: 'Step 5: Find the Discounted Price',
+                text: 'The shop collected <strong>$192</strong> on Day 3 from selling <strong>20</strong> shirts.<br><br>Price per shirt (after 20% discount)<br>= $192 ÷ 20<br>= <strong>$9.60</strong>',
+                actions() {
+                    q6Reset();
+                    q6Show('q6-val-2'); q6Show('q6-val-3');
+                    q6Show('q6-seg-d3');
+                    q6ShowEq('q6-eq1', '$192 ÷ 20 = $9.60 per shirt');
+                    q6ShowEq('q6-eq2', '(after 20% discount)');
+                }
+            },
+            {
+                title: 'Step 6: Find the Original Price',
+                text: 'The discounted price is <strong>80%</strong> of the original (100% − 20% = 80%).<br><br>80% = $9.60<br>100% = $9.60 ÷ 0.8<br>= <strong style="color:#e11d48; font-size:1.2em;">$12</strong>',
+                actions() {
+                    q6Reset();
+                    q6Show('q6-seg-d3');
+                    q6ShowEq('q6-eq1', '80% = $9.60');
+                    q6ShowEq('q6-eq2', '100% = $9.60 ÷ 0.8 = $12');
+                }
+            }
+        ];
+
+        function q6UpdateUI() {
+            const step = q6Steps[q6CurrentStep];
+            document.getElementById('q6-step-title').innerHTML = step.title;
+            document.getElementById('q6-step-desc').innerHTML = step.text;
+            step.actions();
+            document.getElementById('q6-btn-prev').disabled = q6CurrentStep === 0;
+            const nextBtn = document.getElementById('q6-btn-next');
+            nextBtn.disabled = q6CurrentStep === q6Steps.length - 1;
+            nextBtn.textContent = q6CurrentStep === q6Steps.length - 1 ? 'Done' : 'Next';
+            document.querySelectorAll('#q6-dots-container .dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === q6CurrentStep);
+            });
+        }
+
+        function q6ChangeStep(dir) {
+            q6CurrentStep = Math.max(0, Math.min(q6Steps.length - 1, q6CurrentStep + dir));
+            q6UpdateUI();
+        }
+
+        function q6Init() {
+            const dotsContainer = document.getElementById('q6-dots-container');
+            dotsContainer.innerHTML = '';
+            q6Steps.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.className = `dot ${index === 0 ? 'active' : ''}`;
+                dotsContainer.appendChild(dot);
+            });
+            q6UpdateUI();
+        }
+
+        // ==========================================
         // PRINT FUNCTIONALITY
         // ==========================================
         function openPrintModal() {
@@ -2101,6 +2369,24 @@
             return clone.outerHTML;
         }
 
+        function getQ6SvgForPrint() {
+            if (!q6Inited) { q6Init(); q6Inited = true; }
+            const svg = document.getElementById('q6-svg');
+            const clone = svg.cloneNode(true);
+            clone.removeAttribute('id');
+            // Hide all interactive elements
+            for (let i = 0; i <= 7; i++) { const el = clone.querySelector('#q6-val-' + i); if (el) el.style.opacity = '0'; }
+            for (let i = 1; i <= 7; i++) {
+                const s = clone.querySelector('#q6-sold-' + i); if (s) s.style.opacity = '0';
+                const g = clone.querySelector('#q6-seg-d' + i); if (g) g.style.opacity = '0';
+            }
+            ['q6-area-5days','q6-eq1','q6-eq2'].forEach(id => {
+                const el = clone.querySelector('#' + id); if (el) el.style.opacity = '0';
+            });
+            clone.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+            return clone.outerHTML;
+        }
+
         function buildQuestionsPages() {
             return `
                 <div class="print-page">
@@ -2173,7 +2459,19 @@
                         </div>
                         <div class="print-diagram">${getQ5SvgForPrint()}</div>
                     </div>
-                    <div class="print-half"></div>
+                    <div class="print-half">
+                        <div class="print-q-header">
+                            <div class="print-q-num">6</div>
+                            <div class="print-q-label">T-Shirt Sale</div>
+                        </div>
+                        <div class="print-q-text">
+                            A shop offered 120 T-shirts at a 20% discount during a 7-day sale. The line graph shows the number of T-shirts left unsold at the end of each day.<br><br>
+                            (a) On which day was the most number of T-shirts sold? [1]<br>
+                            (b) What percentage of 120 T-shirts were sold in the first 5 days of the sale? Correct your answer to the nearest percent. [1]<br>
+                            (c) The shop collected $192 on Day 3 of the sale. What was the price of each T-shirts before the discount? [2]
+                        </div>
+                        <div class="print-diagram">${getQ6SvgForPrint()}</div>
+                    </div>
                 </div>`;
         }
 
@@ -2313,7 +2611,36 @@
                             </div>
                         </div>
                     </div>
-                    <div class="print-half"></div>
+                    <div class="print-half">
+                        <div class="print-q-header">
+                            <div class="print-q-num">6</div>
+                            <div class="print-q-label">T-Shirt Sale</div>
+                        </div>
+                        <div class="print-answer-box">
+                            <h3>Solution</h3>
+                            <div class="print-answer-item">
+                                <strong>(a)</strong> Sold per day: Day 1: 25, Day 2: 15, Day 3: 20, Day 4: 15, Day 5: 10, Day 6: 15, Day 7: 15
+                            </div>
+                            <div class="print-answer-final" style="margin-bottom: 3mm;">
+                                Most sold on <strong>Day 1</strong> (25 shirts)
+                            </div>
+                            <div class="print-answer-item">
+                                <strong>(b)</strong> Sold in first 5 days = 120 &minus; 35 = 85<br>
+                                85 &divide; 120 &times; 100 = 70.833...%
+                            </div>
+                            <div class="print-answer-final" style="margin-bottom: 3mm;">
+                                &asymp; <strong>71%</strong>
+                            </div>
+                            <div class="print-answer-item">
+                                <strong>(c)</strong> Day 3 sold: 80 &minus; 60 = 20 shirts<br>
+                                Discounted price = $192 &divide; 20 = $9.60<br>
+                                Original = $9.60 &divide; 0.8
+                            </div>
+                            <div class="print-answer-final">
+                                = <strong>$12</strong>
+                            </div>
+                        </div>
+                    </div>
                 </div>`;
         }
 
